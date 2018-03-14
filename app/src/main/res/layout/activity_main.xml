@@ -39,8 +39,8 @@
         android:layout_gravity="center_horizontal"
         android:id="@+id/loginErrorWarning"
         tools:text="Login Unsuccessful"
-        tools:textColor="@android:color/red"
-        android:textColor="@android:color/red"/>
+        tools:textColor="@android:color/holo_red_dark"
+        android:textColor="@android:color/holo_red_dark"/>
 
     <Button
         android:layout_width="match_parent"
