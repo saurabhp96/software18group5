@@ -14,23 +14,15 @@ public class Customer {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long CustId;
-
+    private long custID;
     private String FirstName, LastName;
 
-    public Customer(){}
-
-    public Customer(String firstName, String lastName) {
-        FirstName = firstName;
-        LastName = lastName;
+    public long getCustID() {
+        return custID;
     }
 
-    public long getCustId() {
-        return CustId;
-    }
-
-    public void setCustId(long custId) {
-        CustId = custId;
+    public void setCustID(long custID) {
+        this.custID = custID;
     }
 
     public String getFirstName() {

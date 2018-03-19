@@ -1,12 +1,11 @@
 package group5.f4tapi;
 
 import group5.f4tapi.entity.Customer;
+import group5.f4tapi.entity.MenuItem;
 import group5.f4tapi.repository.CustomerRepository;
+import group5.f4tapi.repository.MenuItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,20 +13,29 @@ import java.util.List;
 public class Controller {
 
     private CustomerRepository customerRepository;
+    private MenuItemRepository menuItemRepository;
 
     @Autowired
-    public Controller(CustomerRepository customerRepository) {
+    public Controller(CustomerRepository customerRepository, MenuItemRepository menuItemRepository) {
         this.customerRepository = customerRepository;
+        this.menuItemRepository = menuItemRepository;
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
     public void addUser(@RequestBody Customer.AddRequest addRequest) {
-        Customer customer = new Customer(addRequest.firstName, addRequest.lastName);
+        Customer customer = new Customer();
+        customer.setFirstName(addRequest.firstName);
+        customer.setLastName(addRequest.lastName);
         customerRepository.save(customer);
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     public List<Customer> findAllCustomers() {
         return customerRepository.findAll();
+    }
+
+    @RequestMapping(value = "/order/{id}", method = RequestMethod.GET)
+    public List<MenuItem> findItemsInOrder(@PathVariable("id") long id) {
+        return menuItemRepository.findByOrders_OrderID(id);
     }
 }
