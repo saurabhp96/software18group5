@@ -2,8 +2,10 @@ package group5.f4tapi;
 
 import group5.f4tapi.entity.Customer;
 import group5.f4tapi.entity.MenuItem;
+import group5.f4tapi.entity.Table;
 import group5.f4tapi.repository.CustomerRepository;
 import group5.f4tapi.repository.MenuItemRepository;
+import group5.f4tapi.repository.TableRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +16,13 @@ public class Controller {
 
     private CustomerRepository customerRepository;
     private MenuItemRepository menuItemRepository;
+    private TableRepository tableRepository;
 
     @Autowired
-    public Controller(CustomerRepository customerRepository, MenuItemRepository menuItemRepository) {
+    public Controller(CustomerRepository customerRepository, MenuItemRepository menuItemRepository, TableRepository tableRepository) {
         this.customerRepository = customerRepository;
         this.menuItemRepository = menuItemRepository;
+        this.tableRepository=tableRepository;
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
@@ -38,4 +42,15 @@ public class Controller {
     public List<MenuItem> findItemsInOrder(@PathVariable("id") long id) {
         return menuItemRepository.findByOrders_OrderID(id);
     }
+
+    @RequestMapping(value="/tables",method=RequestMethod.GET)
+    public List<Table> findAllTables(){
+        return tableRepository.findAll();
+    }
+
+
+
+
+
+
 }
