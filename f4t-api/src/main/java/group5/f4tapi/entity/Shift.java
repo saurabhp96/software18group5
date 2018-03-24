@@ -11,7 +11,7 @@ public class Shift {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer shiftId;
 
     private Date date;
 

@@ -7,17 +7,17 @@ import javax.persistence.Id;
 public class AllTables {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer tableId;
 
     private Integer numSeats;
 
 
-    public Integer getId() {
-        return id;
+    public Integer getTableId() {
+        return tableId;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setTableId(Integer id) {
+        this.tableId = id;
     }
 
     public Integer getNumSeats() {
