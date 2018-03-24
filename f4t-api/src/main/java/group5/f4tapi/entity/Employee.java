@@ -16,6 +16,11 @@ public class Employee {
     private String firstName;
     private String lastName;
 
+    public static class AddRequest {
+        public String firstName, lastName, role;
+        public Double salary;
+    }
+
     public Integer getEmpID() {
         return empID;
     }

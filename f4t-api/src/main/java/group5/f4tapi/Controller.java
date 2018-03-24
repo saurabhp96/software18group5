@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class Controller {
@@ -56,12 +57,34 @@ public class Controller {
     @RequestMapping(value="/employees",method=RequestMethod.GET)
     public List<Employee> findAllEmployees(){
         return employeeRepository.findAll();
-
     }
 
     @RequestMapping(value="/menu", method = RequestMethod.GET)
     public List<MenuItem> findAllMenuItems(){
         return menuItemRepository.findAll();
+    }
+
+    @RequestMapping(value="/login",method=RequestMethod.POST)
+    public @ResponseBody Employee checkLogin(@RequestParam long empid){
+
+        Optional<Employee> searchResult=employeeRepository.findById(empid);
+        if(searchResult.isPresent()){
+            return searchResult.get();
+        }
+        else{
+            return null;
+        }
+
+    }
+
+    @RequestMapping(value = "/addEmployee",method = RequestMethod.POST)
+    public void addEmployee(@RequestBody Employee.AddRequest addRequest){
+        Employee hire=new Employee();
+        hire.setFirstName(addRequest.firstName);
+        hire.setLastName(addRequest.lastName);
+        hire.setSalary(addRequest.salary);
+        hire.setRole(addRequest.role);
+        employeeRepository.save(hire);
     }
 
 
