@@ -1,11 +1,10 @@
 package com.example.softwareeng18.food4thought;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,29 +13,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final TextView loginErrorWarning = (TextView) findViewById(R.id.loginErrorWarning);
-        loginErrorWarning.setText("");
-
-
-        Button loginButton = (Button) findViewById(R.id.loginButton);
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        Button employeeLoginButton = (Button) findViewById(R.id.employeeLoginButton);
+        employeeLoginButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                EditText usernameEditText = (EditText) findViewById(R.id.username);
-                EditText passwordEditText = (EditText) findViewById(R.id.password);
-                String enteredUsername = usernameEditText.getText().toString();
-                String enteredPassword = passwordEditText.getText().toString();
-                // check login credentials (enteredUsername and enteredPassword)
+                //move to login screen
+                Intent employeeLoginIntent=new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(employeeLoginIntent);
+            }
+        });
 
-//                if (login not successful)
-//                {
-//                    loginErrorWarning.setText("Login Unsuccessful");
-//                }
-//                else
-//                {
-//                    //move to employee/manager screen
-//                }
+        Button customerButton = (Button) findViewById(R.id.customerButton);
+        customerButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                //move to customer screen
+                Intent customerIntent=new Intent(MainActivity.this,CustomerActivity.class);
+                startActivity(customerIntent);
 
             }
         });
+
+
     }
 }
