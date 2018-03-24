@@ -2,7 +2,7 @@ package group5.f4tapi;
 
 import group5.f4tapi.entity.Customer;
 import group5.f4tapi.entity.MenuItem;
-import group5.f4tapi.entity.Table;
+import group5.f4tapi.entity.AllTables;
 import group5.f4tapi.repository.CustomerRepository;
 import group5.f4tapi.repository.MenuItemRepository;
 import group5.f4tapi.repository.TableRepository;
@@ -44,7 +44,7 @@ public class Controller {
     }
 
     @RequestMapping(value="/tables",method=RequestMethod.GET)
-    public List<Table> findAllTables(){
+    public List<AllTables> findAllTables(){
         return tableRepository.findAll();
     }
 
