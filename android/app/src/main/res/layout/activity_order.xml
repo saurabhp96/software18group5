@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.softwareeng18.food4thought.OrderActivity">
+
+    <EditText
+        android:id="@+id/editText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="417dp"
+        android:layout_marginEnd="153dp"
+        android:layout_marginStart="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/callWaiter"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp"
+        android:layout_marginEnd="151dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="3dp"
+        android:text="Call Waiter"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/PayBill"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Priority" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Place Order"
+        tools:layout_editor_absoluteX="263dp"
+        tools:layout_editor_absoluteY="406dp" />
+
+    <Button
+        android:id="@+id/Priority"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="268dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="312dp"
+        android:text="Priority"
+        app:layout_constraintBottom_toTopOf="@+id/callWaiter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+    <Button
+        android:id="@+id/PayBill"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pay Bill"
+        tools:layout_editor_absoluteX="280dp"
+        tools:layout_editor_absoluteY="457dp" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabLayout"
+        android:layout_width="138dp"
+        android:layout_height="292dp"
+        tools:layout_editor_absoluteX="239dp"
+        tools:layout_editor_absoluteY="87dp">
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Quantity" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Item" />
+
+        <android.support.design.widget.TabItem
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Price" />
+    </android.support.design.widget.TabLayout>
+
+    <ImageButton
+        android:id="@+id/Drinks"
+        android:layout_width="75dp"
+        android:layout_height="77dp"
+        android:layout_marginBottom="217dp"
+        android:layout_marginEnd="136dp"
+        android:layout_marginStart="28dp"
+        app:layout_constraintBottom_toTopOf="@+id/Priority"
+        app:layout_constraintEnd_toStartOf="@+id/tabLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@mipmap/ic_launcher_foreground" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Drinks"
+        android:textColor="@android:color/background_light"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="159dp" />
+
+</android.support.constraint.ConstraintLayout>
