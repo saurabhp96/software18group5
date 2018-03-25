@@ -65,11 +65,12 @@ public class Controller {
     }
 
     @RequestMapping(value="/login",method=RequestMethod.POST)
-    public @ResponseBody Employee checkLogin(@RequestParam long empid){
+    public @ResponseBody Employee checkLogin(@RequestParam long empid, @RequestParam String password){
 
         Optional<Employee> searchResult=employeeRepository.findById(empid);
         if(searchResult.isPresent()){
-            return searchResult.get();
+            Employee employee=searchResult.get();
+            return employee.getPassword().equals(password)?employee:null;
         }
         else{
             return null;
