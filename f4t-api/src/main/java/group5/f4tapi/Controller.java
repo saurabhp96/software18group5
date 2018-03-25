@@ -84,6 +84,7 @@ public class Controller {
         hire.setLastName(addRequest.lastName);
         hire.setSalary(addRequest.salary);
         hire.setRole(addRequest.role);
+        hire.setPassword(addRequest.password);
         employeeRepository.save(hire);
     }
 
