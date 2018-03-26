@@ -10,13 +10,13 @@ public class MenuItem {
     private double Price;
     private int Calories;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "OrderItems",
             inverseJoinColumns=@JoinColumn(name="OrderID", referencedColumnName="OrderID"),
             joinColumns=@JoinColumn(name="Item", referencedColumnName="Name")
     )
-    private Set<Orders> orders;
+    private Set<Order> orders;
 
     public String getName() {
         return name;
@@ -40,5 +40,19 @@ public class MenuItem {
 
     public void setCalories(int calories) {
         Calories = calories;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this) return true;
+        if (!(o instanceof MenuItem)) return false;
+
+        MenuItem mi = (MenuItem) o;
+        return getName().equals(mi.getName());
+    }
+
+    @Override
+    public String toString() {
+        return getName();
     }
 }

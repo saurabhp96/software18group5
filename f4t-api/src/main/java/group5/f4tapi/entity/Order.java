@@ -4,12 +4,16 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Orders {
+public class Order {
     @Id
     private long orderID;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<MenuItem> menuItems;
+
+    public boolean addItem(MenuItem item){
+        return menuItems.add(item);
+    }
 
     public long getOrderID() {
         return orderID;

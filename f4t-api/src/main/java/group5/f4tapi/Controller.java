@@ -1,9 +1,6 @@
 package group5.f4tapi;
 
-import group5.f4tapi.entity.Customer;
-import group5.f4tapi.entity.Employee;
-import group5.f4tapi.entity.MenuItem;
-import group5.f4tapi.entity.AllTables;
+import group5.f4tapi.entity.*;
 import group5.f4tapi.repository.CustomerRepository;
 import group5.f4tapi.repository.EmployeeRepository;
 import group5.f4tapi.repository.MenuItemRepository;
@@ -78,7 +75,7 @@ public class Controller {
 
     }
 
-    @RequestMapping(value = "/addEmployee",method = RequestMethod.POST)
+    @RequestMapping(value = "/employees",method = RequestMethod.POST)
     public void addEmployee(@RequestBody Employee.AddRequest addRequest){
         Employee hire=new Employee();
         hire.setFirstName(addRequest.firstName);
