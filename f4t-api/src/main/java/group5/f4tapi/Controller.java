@@ -55,11 +55,6 @@ public class Controller {
         return tableRepository.findAll();
     }
 
-    @RequestMapping(value="/employees",method=RequestMethod.GET)
-    public List<Employee> findAllEmployees(){
-        return employeeRepository.findAll();
-    }
-
     @RequestMapping(value="/menu", method = RequestMethod.GET)
     public List<MenuItem> findAllMenuItems(){
         return menuItemRepository.findAll();
@@ -77,8 +72,13 @@ public class Controller {
         }
     }
 
+    @RequestMapping(value="/employees",method=RequestMethod.GET)
+    public List<Employee> findAllEmployees(){
+        return employeeRepository.findAll();
+    }
+
     @RequestMapping(value = "/employees",method = RequestMethod.POST)
-    public void addEmployee(@RequestBody Employee.AddRequest addRequest){
+    public void hireEmployee(@RequestBody Employee.AddRequest addRequest){
         Employee hire=new Employee();
         hire.setFirstName(addRequest.firstName);
         hire.setLastName(addRequest.lastName);
@@ -88,9 +88,10 @@ public class Controller {
         employeeRepository.save(hire);
     }
 
-
-
-
+    @RequestMapping(value = "/employees",method = RequestMethod.DELETE)
+    public void fireEmployee(@RequestParam long empID){
+        employeeRepository.deleteById(empID);
+    }
 
 
 }

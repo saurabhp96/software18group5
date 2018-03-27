@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface MenuItemRepository extends JpaRepository<MenuItem,String> {
     List<MenuItem> findByOrders_OrderID(long id);
+    long countByOrders_OrderID(long id);
 }

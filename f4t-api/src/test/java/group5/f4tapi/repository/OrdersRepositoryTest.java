@@ -25,10 +25,13 @@ public class OrdersRepositoryTest {
 
     @Test
     public void addItemToOrder() {
-        ordersRepository.addItemToOrder(1,"Samosa");
+        long initialCount = menuItemRepository.countByOrders_OrderID(1);
+        boolean added = ordersRepository.addItemToOrder(1,"Samosa");
+        assertThat(added).isTrue();
         MenuItem samosa = new MenuItem();
         samosa.setName("Samosa");
         List<MenuItem> items = menuItemRepository.findByOrders_OrderID(1);
         assertThat(items).contains(samosa);
+        assertThat(items.size()).isEqualTo(initialCount+1);
     }
 }

@@ -10,7 +10,7 @@ public class Employee {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer empID;
+    private long empID;
     private String role;
     private Double salary;
     private String firstName;
@@ -22,11 +22,11 @@ public class Employee {
         public Double salary;
     }
 
-    public Integer getEmpID() {
+    public long getEmpID() {
         return empID;
     }
 
-    public void setEmpID(Integer empID) {
+    public void setEmpID(long empID) {
         this.empID = empID;
     }
 
@@ -68,5 +68,14 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == this) return true;
+        if (!(o instanceof Employee)) return false;
+
+        Employee emp = (Employee) o;
+        return getEmpID() == emp.getEmpID() && getFirstName().equals(emp.getFirstName()) && getLastName().equals(emp.getLastName()) && getRole().equals(emp.getRole()) && getSalary().equals(emp.getSalary());
     }
 }
