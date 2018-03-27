@@ -67,7 +67,6 @@ public class Controller {
 
     @RequestMapping(value="/login",method=RequestMethod.POST)
     public @ResponseBody Employee checkLogin(@RequestParam long empid, @RequestParam String password){
-
         Optional<Employee> searchResult=employeeRepository.findById(empid);
         if(searchResult.isPresent()){
             Employee employee=searchResult.get();
@@ -76,7 +75,6 @@ public class Controller {
         else{
             return null;
         }
-
     }
 
     @RequestMapping(value = "/employees",method = RequestMethod.POST)
