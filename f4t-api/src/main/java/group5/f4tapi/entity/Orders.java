@@ -4,11 +4,16 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Entity
-public class Order {
+public class Orders {
     @Id
     private long orderID;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "OrderItems",
+            joinColumns=@JoinColumn(name="OrderID", referencedColumnName="OrderID"),
+            inverseJoinColumns=@JoinColumn(name="Item", referencedColumnName="Name")
+    )
     private Set<MenuItem> menuItems;
 
     public boolean addItem(MenuItem item){

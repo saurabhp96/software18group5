@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import java.sql.Time;
 
 @Entity
-public class Shift {
+public class Shifts {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

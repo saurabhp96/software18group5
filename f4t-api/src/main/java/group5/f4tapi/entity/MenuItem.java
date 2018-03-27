@@ -16,7 +16,7 @@ public class MenuItem {
             inverseJoinColumns=@JoinColumn(name="OrderID", referencedColumnName="OrderID"),
             joinColumns=@JoinColumn(name="Item", referencedColumnName="Name")
     )
-    private Set<Order> orders;
+    private Set<Orders> orders;
 
     public String getName() {
         return name;

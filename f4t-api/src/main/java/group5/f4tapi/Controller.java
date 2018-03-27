@@ -1,10 +1,7 @@
 package group5.f4tapi;
 
 import group5.f4tapi.entity.*;
-import group5.f4tapi.repository.CustomerRepository;
-import group5.f4tapi.repository.EmployeeRepository;
-import group5.f4tapi.repository.MenuItemRepository;
-import group5.f4tapi.repository.TableRepository;
+import group5.f4tapi.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +15,16 @@ public class Controller {
     private MenuItemRepository menuItemRepository;
     private TableRepository tableRepository;
     private EmployeeRepository employeeRepository;
+    private OrdersRepository ordersRepository;
 
     @Autowired
     public Controller(CustomerRepository customerRepository, MenuItemRepository menuItemRepository,
-                      TableRepository tableRepository, EmployeeRepository employeeRepository) {
+                      TableRepository tableRepository, EmployeeRepository employeeRepository, OrdersRepository ordersRepository) {
         this.customerRepository = customerRepository;
         this.menuItemRepository = menuItemRepository;
         this.tableRepository=tableRepository;
         this.employeeRepository=employeeRepository;
+        this.ordersRepository = ordersRepository;
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
@@ -39,6 +38,11 @@ public class Controller {
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
     public List<Customer> findAllCustomers() {
         return customerRepository.findAll();
+    }
+
+    @RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
+    public boolean addToOrder(@PathVariable("id") long id, @RequestParam String itemName) {
+        return ordersRepository.addItemToOrder(id, itemName);
     }
 
     @RequestMapping(value = "/order/{id}", method = RequestMethod.GET)
