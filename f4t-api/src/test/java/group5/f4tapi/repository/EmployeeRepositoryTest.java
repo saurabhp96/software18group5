@@ -39,4 +39,14 @@ public class EmployeeRepositoryTest {
         assertThat(result.isPresent() && result.get().equals(newEmp)).isTrue();
         assertThat(employeeRepository.count()).isEqualTo(initialCount+1);
     }
+
+    @Test
+    public void fireEmployee() {
+        long toFire = employeeRepository.findAll().get(0).getEmpID();
+        long initialCount = employeeRepository.count();
+        employeeRepository.deleteById(toFire);
+        Optional<Employee> fired = employeeRepository.findById(toFire);
+        assertThat(fired.isPresent()).isFalse();
+        assertThat(employeeRepository.count()).isEqualTo(initialCount-1);
+    }
 }
