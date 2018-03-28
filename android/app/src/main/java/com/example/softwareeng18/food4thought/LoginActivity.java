@@ -1,5 +1,6 @@
 package com.example.softwareeng18.food4thought;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -38,5 +39,46 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //delete code below
+
+        Button manager = (Button) findViewById(R.id.manager);
+        manager.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent managerIntent=new Intent(LoginActivity.this,ManagerActivity.class);
+                startActivity(managerIntent);
+               }
+        });
+
+        Button waiter = (Button) findViewById(R.id.waiter);
+        waiter.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent waiterIntent=new Intent(LoginActivity.this,WaiterActivity.class);
+                startActivity(waiterIntent);
+            }
+        });
+
+        Button chef = (Button) findViewById(R.id.chef);
+        chef.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent chefIntent=new Intent(LoginActivity.this,ChefActivity.class);
+                startActivity(chefIntent);
+            }
+        });
+
+        Button busboy = (Button) findViewById(R.id.busboy);
+        busboy.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent busboyIntent=new Intent(LoginActivity.this,BusBoyActivity.class);
+                startActivity(busboyIntent);
+            }
+        });
+
+
+
+
+
+
     }
 }

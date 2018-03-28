@@ -19,6 +19,13 @@
         <activity android:name=".LoginActivity" />
         <activity android:name=".CustomerActivity" />
         <activity android:name=".OrderActivity"></activity>
+        <activity android:name=".BusBoyActivity"></activity>
+        <activity android:name=".ManagerActivity"></activity>
+        <activity android:name=".ChefActivity"></activity>
+        <activity android:name=".WaiterActivity"></activity>
+        <activity android:name=".CustomerWaitTimeActivity"></activity>
+        <activity android:name=".PayBillActivity"></activity>
+        <activity android:name=".RequestTableActivity"></activity>
     </application>
 
 </manifest>
