@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
 
         //delete code below
 
-        Button manager = (Button) findViewById(R.id.manager);
+      /*  Button manager = (Button) findViewById(R.id.manager);
         manager.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent managerIntent=new Intent(LoginActivity.this,ManagerActivity.class);
@@ -151,7 +151,7 @@ public class LoginActivity extends AppCompatActivity {
                 Intent busboyIntent=new Intent(LoginActivity.this,BusBoyActivity.class);
                 startActivity(busboyIntent);
             }
-        });
+        });*/
 
 
     }
