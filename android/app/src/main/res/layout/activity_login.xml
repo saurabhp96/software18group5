@@ -16,7 +16,7 @@
         android:textColor="@android:color/black"
         android:layout_gravity="center_horizontal"/>
 
-
+<!--
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -54,6 +54,8 @@
         android:id="@+id/loginButton"
         android:text="Login"/>
 
+        -->
+
     <!--Delete buttons below -->
 
     <Button
@@ -63,7 +65,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/manager"
-        android:text="manager (temp)"/>
+        android:text="manager"/>
 
     <Button
         android:layout_width="match_parent"
@@ -71,7 +73,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/chef"
-        android:text="chef (temp)"/>
+        android:text="chef"/>
 
     <Button
         android:layout_width="match_parent"
@@ -79,7 +81,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/waiter"
-        android:text="waiter (temp)"/>
+        android:text="waiter"/>
 
     <Button
         android:layout_width="match_parent"
@@ -87,7 +89,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:id="@+id/busboy"
-        android:text="busboy (temp)"/>
+        android:text="busboy"/>
 
 
 
