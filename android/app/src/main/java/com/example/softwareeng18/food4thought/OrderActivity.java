@@ -97,10 +97,6 @@ public class OrderActivity extends AppCompatActivity {
         listAdapter = new ArrayAdapter<String>(this, R.layout.orderrow, menuList);
         menuList.add("Alfredo Pasta");
         menuList.add("Spicy Sushi");
-        menuList.add("Samosa");
-        menuList.add("Pizza");
-        menuList.add("Ice Cream");
-        menuList.add("French Fries");
         menuView.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
 
