@@ -51,19 +51,50 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onResponse(String response) {
                                 if(response.trim().length()==0){
-                                    Toast toast = Toast.makeText(getApplicationContext(), "fail", Toast.LENGTH_SHORT);
+                                    Toast toast = Toast.makeText(getApplicationContext(), "incorrect credentials", Toast.LENGTH_SHORT);
                                     toast.show();
                                 }
                                 else{
-
                                     try {
-                                        JSONObject resp = new JSONObject();
+                                        JSONObject resp = new JSONObject(response);
+                                        Toast toast;
 
-                                        resp = new JSONObject(response);
-                                        Toast toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+                                        switch(resp.getString("role")){
+                                            case "Manager":
+//                                                resp = new JSONObject(response);
+                                                Intent managerIntent=new Intent(LoginActivity.this,ManagerActivity.class);
+                                                startActivity(managerIntent);
+                                                break;
+                                            case "Chef":
+                                                resp = new JSONObject(response);
+                                                Intent chefIntent=new Intent(LoginActivity.this,ChefActivity.class);
+                                                startActivity(chefIntent);
+                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+                                                toast.show();
+                                                break;
+                                            case "Waiter":
+                                                resp = new JSONObject(response);
+                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+                                                toast.show();
+                                                Intent waiterIntent=new Intent(LoginActivity.this,WaiterActivity.class);
+                                                startActivity(waiterIntent);
+                                                break;
+                                            case "Busboy":
+                                                resp = new JSONObject(response);
+                                                Intent busboyIntent=new Intent(LoginActivity.this,BusBoyActivity.class);
+                                                startActivity(busboyIntent);
+                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+                                                toast.show();;
+                                                break;
+                                        }
+
+
+//                                        resp = new JSONObject(response);
+                                         toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
                                         toast.show();
                                     }
                                     catch(Exception e){
+                                        Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT);
 
                                     }
                                 }
@@ -83,18 +114,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 queue.add(stringRequest);
 
-
-
-                // check login credentials (enteredUsername and enteredPassword)
-
-//                if (login not successful)
-//                {
-//                    loginErrorWarning.setText("Login Unsuccessful");
-//                }
-//                else
-//                {
-//                    //move to employee/manager screen
-//                }
 
             }
         });
@@ -135,9 +154,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
     }
+
 }
