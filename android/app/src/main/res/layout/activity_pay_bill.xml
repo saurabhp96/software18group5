@@ -28,11 +28,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="74dp"
         android:layout_marginEnd="107dp"
         android:layout_marginStart="75dp"
         android:layout_marginTop="56dp"
         android:text="Payment Method"
         android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/textView12"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -62,54 +64,45 @@
         android:id="@+id/textView12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:layout_marginEnd="327dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="70dp"
-        android:text="Bill"
+        android:layout_marginBottom="24dp"
+        android:layout_marginStart="80dp"
+        android:text="Bill:  $"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/textView13"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView13"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="82dp"
+        android:layout_marginBottom="28dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="51dp"
         android:text="Enter Tip:   $"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/textView14"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/textView14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="127dp"
-        android:layout_marginStart="43dp"
-        android:text="Total"
+        android:layout_marginBottom="56dp"
+        android:layout_marginStart="65dp"
+        android:text="Total:  $"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/button"
         app:layout_constraintStart_toStartOf="parent" />
 
     <EditText
         android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="171dp"
-        android:layout_marginEnd="74dp"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="154dp"
+        android:layout_width="157dp"
+        android:layout_height="43dp"
+        android:layout_marginBottom="103dp"
+        android:layout_marginStart="7dp"
         android:ems="10"
-        android:inputType="number"
+        android:inputType="numberDecimal"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintStart_toEndOf="@+id/textView13" />
 
 </android.support.constraint.ConstraintLayout>
