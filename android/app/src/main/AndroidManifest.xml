@@ -18,23 +18,15 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".CustomerActivity" />
-<<<<<<< HEAD
         <activity android:name=".OrderActivity" />
         <activity android:name=".ManagerActivity" />
-        <activity android:name=".priorityActivity" />
         <activity android:name=".PayBillActivity" />
         <activity android:name=".CustomerWaitTimeActivity" />
         <activity android:name=".testActivity"></activity>
-=======
-        <activity android:name=".OrderActivity"></activity>
         <activity android:name=".BusBoyActivity"></activity>
-        <activity android:name=".ManagerActivity"></activity>
         <activity android:name=".ChefActivity"></activity>
         <activity android:name=".WaiterActivity"></activity>
-        <activity android:name=".CustomerWaitTimeActivity"></activity>
-        <activity android:name=".PayBillActivity"></activity>
         <activity android:name=".RequestTableActivity"></activity>
->>>>>>> 053cb60ca68f16ad830d7b8f57811503cde2f0e9
     </application>
 
 
