@@ -18,7 +18,12 @@
         </activity>
         <activity android:name=".LoginActivity" />
         <activity android:name=".CustomerActivity" />
-        <activity android:name=".OrderActivity"></activity>
+        <activity android:name=".OrderActivity" />
+        <activity android:name=".ManagerActivity" />
+        <activity android:name=".priorityActivity" />
+        <activity android:name=".PayBillActivity" />
+        <activity android:name=".CustomerWaitTimeActivity" />
+        <activity android:name=".testActivity"></activity>
     </application>
 
 </manifest>

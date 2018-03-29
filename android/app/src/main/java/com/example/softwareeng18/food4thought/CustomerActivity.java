@@ -1,6 +1,7 @@
 package com.example.softwareeng18.food4thought;
 
 import android.os.Bundle;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -25,8 +26,8 @@ public class CustomerActivity extends AppCompatActivity {
         placeYourOrderButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //move to placeYourOrder screen
-                //Intent placeYourOrderIntent=new Intent(CustomerActivity.this,_________.class);
-                //startActivity(placeYourOrderIntent);
+                Intent placeYourOrderIntent=new Intent(CustomerActivity.this,OrderActivity.class);
+                startActivity(placeYourOrderIntent);
             }
         });
 
