@@ -1,5 +1,6 @@
 package com.example.softwareeng18.food4thought;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -17,8 +18,8 @@ public class CustomerActivity extends AppCompatActivity {
         requestATableButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //move to requestATable screen
-                //Intent requestATableIntent=new Intent(CustomerActivity.this,_________.class);
-                //startActivity(requestATableIntent);
+                Intent requestATableIntent=new Intent(CustomerActivity.this,RequestTableActivity.class);
+                startActivity(requestATableIntent);
             }
         });
 

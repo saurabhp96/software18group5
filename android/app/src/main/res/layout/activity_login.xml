@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.softwareeng18.food4thought.MainActivity">
+    tools:context="com.example.softwareeng18.food4thought.LoginActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -22,6 +22,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:maxLines="1"
+        android:inputType="text"
         android:id="@+id/username"
         android:hint="Username"/>
 
@@ -30,6 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
+        android:maxLines="1"
+        android:inputType="text"
         android:id="@+id/password"
         android:hint="Password"/>
 
@@ -49,6 +53,45 @@
         android:layout_marginRight="30dp"
         android:id="@+id/loginButton"
         android:text="Login"/>
+
+
+
+    <!--Delete buttons below -->
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/manager"
+        android:text="manager"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/chef"
+        android:text="chef"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/waiter"
+        android:text="waiter"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/busboy"
+        android:text="busboy"/>
+
+
 
 </LinearLayout>
 
