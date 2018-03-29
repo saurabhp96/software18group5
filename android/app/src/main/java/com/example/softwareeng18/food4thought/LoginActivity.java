@@ -42,7 +42,7 @@ public class LoginActivity extends AppCompatActivity {
                 String enteredPassword = passwordEditText.getText().toString();
 
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                String url = "http://172.31.192.122:8080";
+                String url = "http://172.31.200.88:8080";
                 url = url+"/login?empid="+ enteredUsername + "&password=" + enteredPassword;
 
 // Request a string response from the provided URL.

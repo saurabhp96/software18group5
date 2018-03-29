@@ -7,13 +7,19 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class OrderActivity extends AppCompatActivity {
 
@@ -21,6 +27,10 @@ public class OrderActivity extends AppCompatActivity {
     private TextView resultText;
     private Button button2;
     private TextView resultText2;
+
+    public ListView menuView;
+    public ArrayAdapter<String> listAdapter;
+    ArrayList<String> menuList;
 
     public void onCreate(Bundle savedInstanceState) {
 
@@ -73,6 +83,35 @@ public class OrderActivity extends AppCompatActivity {
             });
 
 
+
+
+
+        menuView = (ListView) findViewById( R.id.menuView);
+        menuView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+
+        String[] menuItems= new String[] {}; //Querry api to get list
+
+        menuList = new ArrayList<String>();
+        menuList.addAll( Arrays.asList(menuItems) );
+
+        listAdapter = new ArrayAdapter<String>(this, R.layout.orderrow, menuList);
+        menuList.add("Alfredo Pasta");
+        menuList.add("Spicy Sushi");
+        menuView.setAdapter(listAdapter);
+        listAdapter.notifyDataSetChanged();
+
+
+//        menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+////                String item = menuList.get(i);
+//                menuList.remove(i);
+////                menuList.remove(cu)
+////                Toast toast = Toast.makeText(getApplicationContext(), ""+menuList.get(i), Toast.LENGTH_SHORT);
+////                toast.show();
+//                listAdapter.notifyDataSetChanged();
+//            }
+//        });
 
 
         }
