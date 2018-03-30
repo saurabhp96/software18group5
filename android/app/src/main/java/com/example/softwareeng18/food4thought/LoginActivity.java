@@ -14,7 +14,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -119,9 +118,14 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        //delete code below
+        //Keep this code here
+        //    until we put the backend on AWS,
+        //    because we won't be able to log in
+        //    (or get to the manager/chef/waiter screen)
+        //    to test the app while off-campus
+        //    until the backend gets put on AWS
 
-      /*  Button manager = (Button) findViewById(R.id.manager);
+      Button manager = (Button) findViewById(R.id.manager);
         manager.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent managerIntent=new Intent(LoginActivity.this,ManagerActivity.class);
@@ -144,14 +148,6 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(chefIntent);
             }
         });
-
-        Button busboy = (Button) findViewById(R.id.busboy);
-        busboy.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                Intent busboyIntent=new Intent(LoginActivity.this,BusBoyActivity.class);
-                startActivity(busboyIntent);
-            }
-        });*/
 
 
     }

@@ -56,8 +56,37 @@
 
 
 
-    <!--Delete buttons below -->
+    <!--Keep these buttons here
+    until we put the backend on AWS,
+    because we won't be able to log in
+    (or get to the manager/chef/waiter screen)
+    to test the app while off-campus
+    until the backend gets put on AWS -->
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/manager"
+        android:text="manager"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/chef"
+        android:text="chef"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:id="@+id/waiter"
+        android:text="waiter"/>
 
 </LinearLayout>
 
