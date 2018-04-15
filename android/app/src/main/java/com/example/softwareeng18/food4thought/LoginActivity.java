@@ -78,13 +78,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 Intent waiterIntent=new Intent(LoginActivity.this,WaiterActivity.class);
                                                 startActivity(waiterIntent);
                                                 break;
-                                            case "Busboy":
-                                                resp = new JSONObject(response);
-                                                Intent busboyIntent=new Intent(LoginActivity.this,BusBoyActivity.class);
-                                                startActivity(busboyIntent);
-                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                toast.show();;
-                                                break;
+
                                         }
 
 
