@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Food4Thought</string>
     <string name="title_activity_order">OrderActivity</string>
+    <string name="url">http://172.31.200.88:8080</string>
 </resources>

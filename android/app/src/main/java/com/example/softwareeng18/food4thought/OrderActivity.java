@@ -17,6 +17,17 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,12 +42,38 @@ public class OrderActivity extends AppCompatActivity {
     public ListView menuView;
     public ArrayAdapter<String> listAdapter;
     ArrayList<String> menuList;
+    private String url;
 
     public void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
+        url=getString(R.string.url);
+        String menuRequest=url+"/menu";
+        menuList=new ArrayList<String>();
+
+        RequestQueue queue= Volley.newRequestQueue(this);
+        StringRequest request=new StringRequest(Request.Method.GET, menuRequest, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject res=new JSONObject(response);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(),"Spring error: Failed to get menu from spring",Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        });
+
+        queue.add(request);
 
         //customer views wait time for orders
         Button PlaceOrder = (Button) findViewById(R.id.PlaceOrder);
@@ -89,16 +126,8 @@ public class OrderActivity extends AppCompatActivity {
         menuView = (ListView) findViewById( R.id.menuView);
         menuView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        String[] menuItems= new String[] {}; //Querry api to get list
-
-        menuList = new ArrayList<String>();
-        menuList.addAll( Arrays.asList(menuItems) );
-
         listAdapter = new ArrayAdapter<String>(this, R.layout.orderrow, menuList);
-        menuList.add("Alfredo Pasta");
-        menuList.add("Spicy Sushi");
         menuView.setAdapter(listAdapter);
-        listAdapter.notifyDataSetChanged();
 
 
 //        menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
