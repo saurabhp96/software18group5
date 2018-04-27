@@ -26,6 +26,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,7 +58,11 @@ public class OrderActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 try {
-                    JSONObject res=new JSONObject(response);
+                    JSONArray res=new JSONArray(response);
+                    for(int i=0; i<res.length();i++){
+                        JSONObject item=res.getJSONObject(i);
+                        menuList.add(item.getString("name")+" $"+item.getDouble("price") );
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();
