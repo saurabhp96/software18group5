@@ -55,6 +55,11 @@ public class Controller {
         return tableRepository.findAll();
     }
 
+    @RequestMapping(value = "/findtables",method = RequestMethod.GET)
+    public List<AllTables> findEmptyTables(@RequestParam int numPeople){
+        return tableRepository.findByNumSeatsGreaterThanEqualAndOccupied(numPeople,0);
+    }
+
     @RequestMapping(value="/menu", method = RequestMethod.GET)
     public List<MenuItem> findAllMenuItems(){
         return menuItemRepository.findAll();
@@ -92,6 +97,8 @@ public class Controller {
     public void fireEmployee(@RequestParam long empID){
         employeeRepository.deleteById(empID);
     }
+
+
 
 
 }

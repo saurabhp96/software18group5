@@ -8,8 +8,8 @@ public class AllTables {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tableId;
-
     private Integer numSeats;
+    private Integer isOccupied;
 
 
     public Integer getTableId() {
@@ -26,5 +26,13 @@ public class AllTables {
 
     public void setNumSeats(Integer numSeats) {
         this.numSeats = numSeats;
+    }
+
+    public Integer getIsOccupied() {
+        return isOccupied;
+    }
+
+    public void setIsOccupied(Integer isOccupied) {
+        this.isOccupied = isOccupied;
     }
 }
