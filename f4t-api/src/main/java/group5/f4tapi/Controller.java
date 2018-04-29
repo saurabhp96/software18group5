@@ -15,17 +15,15 @@ public class Controller {
     private MenuItemRepository menuItemRepository;
     private TableRepository tableRepository;
     private EmployeeRepository employeeRepository;
-    private OrdersRepository ordersRepository;
     private RequestsRepository requestsRepository;
 
     @Autowired
     public Controller(CustomerRepository customerRepository, MenuItemRepository menuItemRepository,
-                      TableRepository tableRepository, EmployeeRepository employeeRepository, OrdersRepository ordersRepository, RequestsRepository requestsRepository) {
+                      TableRepository tableRepository, EmployeeRepository employeeRepository, RequestsRepository requestsRepository) {
         this.customerRepository = customerRepository;
         this.menuItemRepository = menuItemRepository;
         this.tableRepository=tableRepository;
         this.employeeRepository=employeeRepository;
-        this.ordersRepository = ordersRepository;
         this.requestsRepository = requestsRepository;
     }
 
@@ -44,12 +42,12 @@ public class Controller {
 
     @RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
     public boolean addToOrder(@PathVariable("id") long id, @RequestParam String itemName) {
-        return ordersRepository.addItemToOrder(id, itemName);
+        return menuItemRepository.addItemToOrder(id, itemName);
     }
 
     @RequestMapping(value = "/order/{id}", method = RequestMethod.GET)
     public List<MenuItem> findItemsInOrder(@PathVariable("id") long id) {
-        return menuItemRepository.findByOrders_OrderID(id);
+        return menuItemRepository.findByOrders_CustID(id);
     }
 
     @RequestMapping(value="/seatcustomer", method = RequestMethod.GET)

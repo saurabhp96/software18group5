@@ -12,11 +12,11 @@ public class MenuItem {
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
-            name = "OrderItems",
-            inverseJoinColumns=@JoinColumn(name="OrderID", referencedColumnName="OrderID"),
-            joinColumns=@JoinColumn(name="Item", referencedColumnName="Name")
+            name = "CustItems",
+            inverseJoinColumns=@JoinColumn(name="CustID", referencedColumnName="CustID"),
+            joinColumns=@JoinColumn(name="MenuItem", referencedColumnName="Name")
     )
-    private Set<Orders> orders;
+    private Set<Customer> orders;
 
     public String getName() {
         return name;

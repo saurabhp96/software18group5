@@ -1,6 +1,7 @@
 package group5.f4tapi.entity;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Customer {
@@ -17,6 +18,14 @@ public class Customer {
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "CustTable")
     private AllTables table;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "CustItems",
+            joinColumns=@JoinColumn(name="CustID", referencedColumnName="CustID"),
+            inverseJoinColumns=@JoinColumn(name="MenuItem", referencedColumnName="Name")
+    )
+    private Set<MenuItem> orderedItems;
 
     public long getCustID() {
         return custID;
