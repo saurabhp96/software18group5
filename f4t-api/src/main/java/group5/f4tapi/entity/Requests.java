@@ -10,15 +10,16 @@ public class Requests {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer table;
+    private long reqID;
+    private long tableID;
     private String message;
 
-    public Integer getTable() {
-        return table;
+    public long getTable() {
+        return tableID;
     }
 
-    public void setTable(Integer table) {
-        this.table = table;
+    public void setTable(long tableID) {
+        this.tableID = tableID;
     }
 
     public String getMessage() {
@@ -27,5 +28,13 @@ public class Requests {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public long getReqID() {
+        return reqID;
+    }
+
+    public void setReqID(long reqID) {
+        this.reqID = reqID;
     }
 }

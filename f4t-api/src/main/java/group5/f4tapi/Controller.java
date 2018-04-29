@@ -16,15 +16,17 @@ public class Controller {
     private TableRepository tableRepository;
     private EmployeeRepository employeeRepository;
     private OrdersRepository ordersRepository;
+    private RequestsRepository requestsRepository;
 
     @Autowired
     public Controller(CustomerRepository customerRepository, MenuItemRepository menuItemRepository,
-                      TableRepository tableRepository, EmployeeRepository employeeRepository, OrdersRepository ordersRepository) {
+                      TableRepository tableRepository, EmployeeRepository employeeRepository, OrdersRepository ordersRepository, RequestsRepository requestsRepository) {
         this.customerRepository = customerRepository;
         this.menuItemRepository = menuItemRepository;
         this.tableRepository=tableRepository;
         this.employeeRepository=employeeRepository;
         this.ordersRepository = ordersRepository;
+        this.requestsRepository = requestsRepository;
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
@@ -93,14 +95,14 @@ public class Controller {
     }
 
     @RequestMapping(value = "/employees",method = RequestMethod.POST)
-    public void hireEmployee(@RequestBody Employee.AddRequest addRequest){
+    public Employee hireEmployee(@RequestBody Employee.AddRequest addRequest){
         Employee hire=new Employee();
         hire.setFirstName(addRequest.firstName);
         hire.setLastName(addRequest.lastName);
         hire.setSalary(addRequest.salary);
         hire.setRole(addRequest.role);
         hire.setPassword(addRequest.password);
-        employeeRepository.save(hire);
+        return employeeRepository.save(hire);
     }
 
     @RequestMapping(value = "/employees",method = RequestMethod.DELETE)
@@ -108,7 +110,21 @@ public class Controller {
         employeeRepository.deleteById(empID);
     }
 
+    @RequestMapping(value = "/seerequests", method = RequestMethod.GET)
+    public List<Requests> seeRequests(){
+        return requestsRepository.findAll();
+    }
 
+    @RequestMapping(value = "/addrequest", method = RequestMethod.GET)
+    public Requests addRequest(@RequestParam long tableID, @RequestParam String message){
+        Requests req = new Requests();
+        req.setTable(tableID);
+        req.setMessage(message);
+        return requestsRepository.save(req);
+    }
 
-
+    @RequestMapping(value = "/closerequest", method = RequestMethod.GET)
+    public void closeRequest(@RequestParam long reqID){
+        requestsRepository.deleteById(reqID);
+    }
 }
