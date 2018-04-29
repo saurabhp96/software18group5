@@ -50,6 +50,16 @@ public class Controller {
         return menuItemRepository.findByOrders_OrderID(id);
     }
 
+    @RequestMapping(value="/seatcustomer", method = RequestMethod.GET)
+    public int seatCustomer(@RequestParam long tableID, @RequestParam long custID){
+        return tableRepository.seatCustomer(tableID, custID);
+    }
+
+    @RequestMapping(value="/unseatcustomer", method = RequestMethod.GET)
+    public int unseatCustomer(@RequestParam long tableID){
+        return tableRepository.unseatCustomer(tableID);
+    }
+
     @RequestMapping(value="/tables",method=RequestMethod.GET)
     public List<AllTables> findAllTables(){
         return tableRepository.findAll();
