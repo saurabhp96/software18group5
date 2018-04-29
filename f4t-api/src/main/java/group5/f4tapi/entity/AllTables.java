@@ -1,15 +1,16 @@
 package group5.f4tapi.entity;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+
 @Entity
 public class AllTables {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer tableId;
     private Integer numSeats;
-    private Integer isOccupied;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "CustID")
+    private Customer customer;
 
 
     public Integer getTableId() {
@@ -26,13 +27,5 @@ public class AllTables {
 
     public void setNumSeats(Integer numSeats) {
         this.numSeats = numSeats;
-    }
-
-    public Integer getIsOccupied() {
-        return isOccupied;
-    }
-
-    public void setIsOccupied(Integer isOccupied) {
-        this.isOccupied = isOccupied;
     }
 }

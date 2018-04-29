@@ -23,6 +23,11 @@ repositories {
 	mavenCentral()
 }
 
+jar {
+	manifest {
+		attributes 'Main-Class': 'group5.f4tapi.Runner'
+	}
+}
 
 dependencies {
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')

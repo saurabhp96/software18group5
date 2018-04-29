@@ -10,7 +10,7 @@ import java.util.List;
 public interface TableRepository extends JpaRepository<AllTables,Long> {
 
     //http://www.thejavageek.com/2017/02/25/spring-data-jpa-query-methods/
-    List<AllTables> findByNumSeatsGreaterThanEqualAndIsOccupied(int numSeats,int occupied);
+    List<AllTables> findByNumSeatsGreaterThanEqualAndCustomerIsNull(int numSeats);
 
 
 }

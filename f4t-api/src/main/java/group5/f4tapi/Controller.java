@@ -57,7 +57,7 @@ public class Controller {
 
     @RequestMapping(value = "/findtables",method = RequestMethod.GET)
     public List<AllTables> findEmptyTables(@RequestParam int numPeople){
-        return tableRepository.findByNumSeatsGreaterThanEqualAndIsOccupied(numPeople,0);
+        return tableRepository.findByNumSeatsGreaterThanEqualAndCustomerIsNull(numPeople);
     }
 
     @RequestMapping(value="/menu", method = RequestMethod.GET)
