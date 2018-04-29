@@ -1,10 +1,8 @@
 package group5.f4tapi.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Time;
+import java.util.Set;
 
 @Entity
 public class Shifts {
@@ -15,6 +13,12 @@ public class Shifts {
     private String day;
     private Time startTime;
     private Time endTime;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "EmpShift",
+                joinColumns = @JoinColumn(name="ShiftID", referencedColumnName = "ShiftID"),
+                inverseJoinColumns = @JoinColumn(name = "EmpID",referencedColumnName = "EmpID"))
+    private Set<Employee> empShifts;
 
     public Integer getShiftId() {
         return shiftId;

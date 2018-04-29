@@ -16,15 +16,18 @@ public class Controller {
     private TableRepository tableRepository;
     private EmployeeRepository employeeRepository;
     private RequestsRepository requestsRepository;
+    private ShiftRepository shiftRepository;
 
     @Autowired
     public Controller(CustomerRepository customerRepository, MenuItemRepository menuItemRepository,
-                      TableRepository tableRepository, EmployeeRepository employeeRepository, RequestsRepository requestsRepository) {
+                      TableRepository tableRepository, EmployeeRepository employeeRepository,
+                      RequestsRepository requestsRepository,ShiftRepository sRepo) {
         this.customerRepository = customerRepository;
         this.menuItemRepository = menuItemRepository;
         this.tableRepository=tableRepository;
         this.employeeRepository=employeeRepository;
         this.requestsRepository = requestsRepository;
+        shiftRepository=sRepo;
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
@@ -124,5 +127,10 @@ public class Controller {
     @RequestMapping(value = "/closerequest", method = RequestMethod.GET)
     public void closeRequest(@RequestParam long reqID){
         requestsRepository.deleteById(reqID);
+    }
+
+    @RequestMapping(value = "/shifts/{id}", method = RequestMethod.GET)
+    public List<Shifts> getEmpShifts(@PathVariable("id") long id){
+        return shiftRepository.findByEmpShifts_EmpID(id);
     }
 }

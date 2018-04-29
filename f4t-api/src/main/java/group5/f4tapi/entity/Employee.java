@@ -1,9 +1,7 @@
 package group5.f4tapi.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Employee {
@@ -16,6 +14,12 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String password;
+
+    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinTable(name = "EmpShift",
+                joinColumns = @JoinColumn(name = "EmpID",referencedColumnName = "EmpID"),
+                inverseJoinColumns = @JoinColumn(name="ShiftID",referencedColumnName = "ShifID"))
+    private Set<Shifts> empShifts;
 
     public static class AddRequest {
         public String firstName, lastName, role, password;
