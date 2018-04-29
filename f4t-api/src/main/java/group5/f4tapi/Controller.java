@@ -41,7 +41,7 @@ public class Controller {
     }
 
     @RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
-    public boolean addToOrder(@PathVariable("id") long id, @RequestParam String itemName) {
+    public int addToOrder(@PathVariable("id") long id, @RequestParam String itemName) {
         return menuItemRepository.addItemToOrder(id, itemName);
     }
 

@@ -18,5 +18,5 @@ public interface MenuItemRepository extends JpaRepository<MenuItem,String> {
     @Transactional
     @Modifying
     @Query(value= "INSERT INTO CustItems VALUES (:custID, :menuItem)", nativeQuery = true)
-    boolean addItemToOrder(@Param("custID") long custID, @Param("menuItem") String menuItem);
+    int addItemToOrder(@Param("custID") long custID, @Param("menuItem") String menuItem);
 }
