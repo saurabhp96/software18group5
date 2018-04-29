@@ -24,10 +24,12 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="10dp"
             android:text="How many guests in your party?"/>
+
         <EditText
+            android:id="@+id/numGuests"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:inputType="number"/>
+            android:inputType="number" />
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,5 +37,92 @@
             android:id="@+id/submitButton"/>
 
     </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Add all members of your party."/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Enter First Name of Guest:"/>
+
+        <EditText
+            android:id="@+id/firstName"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:text="Enter Last Name of Guest:"/>
+
+        <EditText
+            android:id="@+id/lastName"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:inputType="text" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="Add Guest"
+            android:id="@+id/addGuestButton"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="20sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="View available tables"
+            android:id="@+id/viewTablesButton"/>
+
+
+    </LinearLayout>
 </LinearLayout>

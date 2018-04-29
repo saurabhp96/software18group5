@@ -28,10 +28,10 @@ public class Controller {
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
-    public void addUser(@RequestBody Customer.AddRequest addRequest) {
+    public void addUser(@RequestParam String firstName, @RequestParam String lastName) {
         Customer customer = new Customer();
-        customer.setFirstName(addRequest.firstName);
-        customer.setLastName(addRequest.lastName);
+        customer.setFirstName(firstName);
+        customer.setLastName(lastName);
         customerRepository.save(customer);
     }
 
