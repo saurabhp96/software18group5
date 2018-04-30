@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.softwareeng18.food4thought">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,14 +24,11 @@
         <activity android:name=".ManagerActivity" />
         <activity android:name=".PayBillActivity" />
         <activity android:name=".CustomerWaitTimeActivity" />
-        <activity android:name=".testActivity"></activity>
-        <activity android:name=".ChefActivity"></activity>
-        <activity android:name=".WaiterActivity"></activity>
-        <activity android:name=".RequestTableActivity"></activity>
+        <activity android:name=".testActivity" />
+        <activity android:name=".ChefActivity" />
+        <activity android:name=".WaiterActivity" />
+        <activity android:name=".RequestTableActivity" />
+        <activity android:name=".ShiftActivity"></activity>
     </application>
-
-
-
-    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -22,6 +22,8 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static String BASE_ADDRESS = "http://172.30.20.134:8080";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,11 +39,11 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText usernameEditText = (EditText) findViewById(R.id.username);
                 EditText passwordEditText = (EditText) findViewById(R.id.password);
-                String enteredUsername = usernameEditText.getText().toString();
+                final String enteredUsername = usernameEditText.getText().toString();
                 String enteredPassword = passwordEditText.getText().toString();
 
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                String url = "http://172.31.200.88:8080";
+                String url = BASE_ADDRESS;
                 url = url+"/login?empid="+ enteredUsername + "&password=" + enteredPassword;
 
 // Request a string response from the provided URL.
@@ -58,36 +60,41 @@ public class LoginActivity extends AppCompatActivity {
                                         JSONObject resp = new JSONObject(response);
                                         Toast toast;
 
-                                        switch(resp.getString("role")){
-                                            case "Manager":
+                                        Intent shiftIntent = new Intent(LoginActivity.this, ShiftActivity.class);
+                                        shiftIntent.putExtra("role", resp.getString("role"));
+                                        shiftIntent.putExtra("empid", resp.getString("empID"));
+                                        startActivity(shiftIntent);
+
+//                                        switch(resp.getString("role")){
+//                                            case "Manager":
+////                                                resp = new JSONObject(response);
+//                                                Intent managerIntent=new Intent(LoginActivity.this,ManagerActivity.class);
+//                                                startActivity(managerIntent);
+//                                                break;
+//                                            case "Chef":
 //                                                resp = new JSONObject(response);
-                                                Intent managerIntent=new Intent(LoginActivity.this,ManagerActivity.class);
-                                                startActivity(managerIntent);
-                                                break;
-                                            case "Chef":
-                                                resp = new JSONObject(response);
-                                                Intent chefIntent=new Intent(LoginActivity.this,ChefActivity.class);
-                                                startActivity(chefIntent);
-                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                toast.show();
-                                                break;
-                                            case "Waiter":
-                                                resp = new JSONObject(response);
-                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                toast.show();
-                                                Intent waiterIntent=new Intent(LoginActivity.this,WaiterActivity.class);
-                                                startActivity(waiterIntent);
-                                                break;
-
-                                        }
+//                                                Intent chefIntent=new Intent(LoginActivity.this,ChefActivity.class);
+//                                                startActivity(chefIntent);
+//                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+//                                                toast.show();
+//                                                break;
+//                                            case "Waiter":
+//                                                resp = new JSONObject(response);
+//                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+//                                                toast.show();
+//                                                Intent waiterIntent=new Intent(LoginActivity.this,WaiterActivity.class);
+//                                                startActivity(waiterIntent);
+//                                                break;
+//
+//                                        }
 
 
-//                                        resp = new JSONObject(response);
-                                         toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+                                        toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
                                         toast.show();
                                     }
                                     catch(Exception e){
-                                        Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT);
+                                        e.printStackTrace();
+                                        Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT).show();
 
                                     }
                                 }
@@ -140,6 +147,17 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent chefIntent=new Intent(LoginActivity.this,ChefActivity.class);
                 startActivity(chefIntent);
+            }
+        });
+
+        Button shifts = (Button) findViewById(R.id.shifts);
+        shifts.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent shiftIntent = new Intent(LoginActivity.this, ShiftActivity.class);
+                shiftIntent.putExtra("role", "Chef");
+                shiftIntent.putExtra("empid", "2");
+                startActivity(shiftIntent);
+//                Toast.makeText(getApplicationContext(),"bye",Toast.LENGTH_SHORT);
             }
         });
 
