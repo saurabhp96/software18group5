@@ -13,10 +13,19 @@ import java.util.List;
 @Repository
 public interface MenuItemRepository extends JpaRepository<MenuItem,String> {
     List<MenuItem> findByOrders_CustID(long id);
+
     long countByOrders_CustID(long id);
 
     @Transactional
     @Modifying
-    @Query(value= "INSERT INTO CustItems VALUES (:custID, :menuItem)", nativeQuery = true)
+    @Query(value = "INSERT INTO CustItems VALUES (:custID, :menuItem)", nativeQuery = true)
     int addItemToOrder(@Param("custID") long custID, @Param("menuItem") String menuItem);
+
+    @Query(value = "SELECT DISTINCT CustID,ItemName FROM CustItems JOIN MenuItem I on CustItems.MenuItem = I.ItemName WHERE Prepared=FALSE", nativeQuery = true)
+    List<?> unpreparedItems();
+
+    @Transactional
+    @Modifying
+    @Query(value = "UPDATE CustItems SET Prepared = TRUE WHERE CustID = :custID AND MenuItem = :menuItem", nativeQuery = true)
+    int prepareItem(@Param("custID") long custID, @Param("menuItem") String menuItem);
 }

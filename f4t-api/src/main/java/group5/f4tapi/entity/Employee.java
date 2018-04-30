@@ -18,7 +18,7 @@ public class Employee {
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "EmpShift",
                 joinColumns = @JoinColumn(name = "EmpID",referencedColumnName = "EmpID"),
-                inverseJoinColumns = @JoinColumn(name="ShiftID",referencedColumnName = "ShifID"))
+                inverseJoinColumns = @JoinColumn(name="ShiftID",referencedColumnName = "ShiftID"))
     private Set<Shifts> empShifts;
 
     public static class AddRequest {

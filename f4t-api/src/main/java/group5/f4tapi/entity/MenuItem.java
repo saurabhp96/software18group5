@@ -6,24 +6,54 @@ import java.util.Set;
 @Entity
 public class MenuItem {
     @Id
-    private String name;
+    private String ItemName;
     private double Price;
     private int Calories;
+
+    public static class ForChef {
+        private String ItemName;
+        private long CustID;
+        private int Calories;
+
+        public String getItemName() {
+            return ItemName;
+        }
+
+        public void setItemName(String itemName) {
+            ItemName = itemName;
+        }
+
+        public long getCustID() {
+            return CustID;
+        }
+
+        public void setCustID(long custID) {
+            CustID = custID;
+        }
+
+        public int getCalories() {
+            return Calories;
+        }
+
+        public void setCalories(int calories) {
+            Calories = calories;
+        }
+    }
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "CustItems",
             inverseJoinColumns=@JoinColumn(name="CustID", referencedColumnName="CustID"),
-            joinColumns=@JoinColumn(name="MenuItem", referencedColumnName="Name")
+            joinColumns=@JoinColumn(name="MenuItem", referencedColumnName="ItemName")
     )
     private Set<Customer> orders;
 
-    public String getName() {
-        return name;
+    public String getItemName() {
+        return ItemName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setItemName(String itemName) {
+        this.ItemName = itemName;
     }
 
     public double getPrice() {
@@ -48,11 +78,11 @@ public class MenuItem {
         if (!(o instanceof MenuItem)) return false;
 
         MenuItem mi = (MenuItem) o;
-        return getName().equals(mi.getName());
+        return getItemName().equals(mi.getItemName());
     }
 
     @Override
     public String toString() {
-        return getName();
+        return getItemName();
     }
 }

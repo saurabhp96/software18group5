@@ -43,6 +43,16 @@ public class Controller {
         return customerRepository.findAll();
     }
 
+    @RequestMapping(value = "/unprepared", method = RequestMethod.GET)
+    public List<?> unpreparedItems(){
+        return menuItemRepository.unpreparedItems();
+    }
+
+    @RequestMapping(value = "/prepared", method = RequestMethod.GET)
+    public int prepareItem(@RequestParam long custID, @RequestParam String menuItem){
+        return menuItemRepository.prepareItem(custID, menuItem);
+    }
+
     @RequestMapping(value = "/order/{id}", method = RequestMethod.POST)
     public int addToOrder(@PathVariable("id") long id, @RequestParam String itemName) {
         return menuItemRepository.addItemToOrder(id, itemName);
