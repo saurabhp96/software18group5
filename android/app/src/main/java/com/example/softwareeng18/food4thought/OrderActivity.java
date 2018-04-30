@@ -51,7 +51,7 @@ public class OrderActivity extends AppCompatActivity {
 
         tableNumberText=(EditText)findViewById(R.id.table_num);
         Bundle bundle=getIntent().getExtras();
-        tableNumberText.setText(bundle.getString(TABLENUMBER));
+        tableNumberText.setText(bundle==null?"1":bundle.getString(TABLENUMBER));
         tableNumberText.setEnabled(false);
 
         url=getString(R.string.url);
