@@ -17,5 +17,5 @@ public interface ShiftRepository extends JpaRepository<Shifts,Long> {
     @Transactional
     @Modifying
     @Query(value = "INSERT INTO EmpShifts (EmpID,ShiftID) VALUES(:empid,:shiftid)",nativeQuery = true)
-    int addShiftToEmployee(@Param("empid")long empid, @Param("shiftid")long shifid);
+    int addShiftToEmployee(@Param("empid")long empid, @Param("shiftid")long shiftid);
 }

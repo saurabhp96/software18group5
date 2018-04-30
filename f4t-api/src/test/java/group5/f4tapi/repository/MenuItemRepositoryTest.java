@@ -24,7 +24,7 @@ public class MenuItemRepositoryTest {
     public void findByOrders_OrderID() {
        /* List<MenuItem> items = repository.findByOrders_OrderID(1);
         MenuItem banana = new MenuItem();
-        banana.setName("Banana");
+        banana.setItemName("Banana");
         assertThat(items).contains(banana);*/
     }
 }

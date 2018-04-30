@@ -16,14 +16,14 @@ public class Customer {
     private String FirstName, LastName;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "CustTable")
+    @JoinColumn(name = "CustID")
     private AllTables table;
 
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(
             name = "CustItems",
             joinColumns=@JoinColumn(name="CustID", referencedColumnName="CustID"),
-            inverseJoinColumns=@JoinColumn(name="MenuItem", referencedColumnName="Name")
+            inverseJoinColumns=@JoinColumn(name="MenuItem", referencedColumnName="ItemName")
     )
     private Set<MenuItem> orderedItems;
 
