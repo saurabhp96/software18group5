@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.app.AlertDialog;
@@ -31,23 +30,29 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class OrderActivity extends AppCompatActivity {
 
-    private Button button;
+    private Button requestWaiterButton;
     private TextView resultText;
     private Button button2;
     private TextView resultText2;
+    private EditText tableNumberText;
 
     public ListView menuView;
     public ArrayAdapter<String> listAdapter;
     ArrayList<String> menuList;
     private String url;
+    public static final String TABLENUMBER="tablenumber";
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
+
+        tableNumberText=(EditText)findViewById(R.id.table_num);
+        Bundle bundle=getIntent().getExtras();
+        tableNumberText.setText(bundle.getString(TABLENUMBER));
+        tableNumberText.setEnabled(false);
 
         url=getString(R.string.url);
         String menuRequest=url+"/menu";
@@ -114,9 +119,9 @@ public class OrderActivity extends AppCompatActivity {
         });
 
         //request waiter
-        button = (Button) findViewById(R.id.RequestWaiter);
+        requestWaiterButton = (Button) findViewById(R.id.RequestWaiter);
         resultText = (TextView) findViewById(R.id.result);
-        button.setOnClickListener(new OnClickListener() {
+        requestWaiterButton.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
