@@ -28,7 +28,8 @@
         <activity android:name=".ChefActivity" />
         <activity android:name=".WaiterActivity" />
         <activity android:name=".RequestTableActivity" />
-        <activity android:name=".ShiftActivity"></activity>
+        <activity android:name=".ShiftActivity" />
+        <activity android:name=".RequestTableCustomersActivity"></activity>
     </application>
 
 </manifest>

@@ -31,11 +31,12 @@ public class Controller {
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.POST)
-    public void addUser(@RequestParam String firstName, @RequestParam String lastName) {
+    public Customer addUser(@RequestParam String firstName, @RequestParam String lastName) {
         Customer customer = new Customer();
         customer.setFirstName(firstName);
         customer.setLastName(lastName);
         customerRepository.save(customer);
+        return customerRepository.findById(customerRepository.count()).get();
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
