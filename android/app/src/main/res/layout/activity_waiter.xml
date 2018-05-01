@@ -54,22 +54,14 @@
         android:layout_width="match_parent"
         android:layout_height="39dp" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Table Alerts:"
-        android:textSize="18sp" />
 
-    <ListView
-        android:id="@+id/alerts"
-        android:layout_width="match_parent"
-        android:layout_height="144dp"
-        android:choiceMode="singleChoice"
-        android:listSelector="@android:color/darker_gray" />
+
+
 
     <Button
+        android:id="@+id/tableAlerts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="View Tables" />
+        android:text="View Table Alerts" />
 
 </LinearLayout>

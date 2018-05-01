@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,6 +21,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class RequestTableActivity extends AppCompatActivity {
     int pid = 0;
@@ -46,68 +48,29 @@ public class RequestTableActivity extends AppCompatActivity {
                 String first = firstName.getText().toString();
                 String last = lastName.getText().toString();
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                //String url = "http://192.168.0.108:8080";
-                String url=getString(R.string.url);
+                String url = "http://172.30.20.134:8080";
                 url = url+"/customers?firstName="+ first + "&lastName=" + last;
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
                             @Override
                             public void onResponse(String response) {
                                 try {
-                               /* if(response.trim().length()==0){
-                                    Toast toast = Toast.makeText(getApplicationContext(), "Can't add customer", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                }
-                                else{
-                                    try {
-                                        JSONObject resp = new JSONObject(response);
-                                        Toast toast;
-
-                                        /*switch(resp.getString("role")){
-                                            case "Manager":
-//                                                resp = new JSONObject(response);
-                                                Intent managerIntent=new Intent(LoginActivity.this,ManagerActivity.class);
-                                                startActivity(managerIntent);
-                                                break;
-                                            case "Chef":
-                                                resp = new JSONObject(response);
-                                                Intent chefIntent=new Intent(LoginActivity.this,ChefActivity.class);
-                                                startActivity(chefIntent);
-                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                toast.show();
-                                                break;
-                                            case "Waiter":
-                                                resp = new JSONObject(response);
-                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                toast.show();
-                                                Intent waiterIntent=new Intent(LoginActivity.this,WaiterActivity.class);
-                                                startActivity(waiterIntent);
-                                                break;
-                                            case "Busboy":
-                                                resp = new JSONObject(response);
-                                                Intent busboyIntent=new Intent(LoginActivity.this,BusBoyActivity.class);
-                                                startActivity(busboyIntent);
-                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                toast.show();;
-                                                break;
-                                        }*/
 
 
-//                                        resp = new JSONObject(response);
+
                                     JSONObject resp = new JSONObject(response);
+
                                     pid = resp.getInt("custID");
                                     // Toast toast;
-                                    Toast toast = Toast.makeText(getApplicationContext(), "Cust Added", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                    //}
-                                   /* catch(Exception e){
-                                        Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT);
 
-                                    }
-                                }*/
+                                    //JSONArray jsonArray = new JSONArray(response);
+
+                                    //Toast toast = Toast.makeText(getApplicationContext(), "Hello:"+ pid, Toast.LENGTH_SHORT);
+                                    //toast.show();
                                 }
                                 catch(Exception e){
-                                    Toast mtoast =  Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT);
+                                    e.printStackTrace();
+                                    Toast mtoast =  Toast.makeText(getApplicationContext(), "Exception"+e, Toast.LENGTH_SHORT);
                                     mtoast.show();
                                 }
 
@@ -121,7 +84,6 @@ public class RequestTableActivity extends AppCompatActivity {
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
-                        Toast.makeText(context,getString(R.string.url),Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -153,8 +115,8 @@ public class RequestTableActivity extends AppCompatActivity {
                 String num = guests.getText().toString();
                 int guestsNum = Integer.parseInt(num);
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                //String url = "http://192.168.0.108:8080";
-                String url = getString(R.string.url);
+                // String url = "http://192.168.1.222:8080"; //mine
+                String url = "http://172.30.20.134:8080";
                 url = url+"/findtables?numPeople="+ guestsNum;
                 // Toast.makeText(getApplicationContext(),url,Toast.LENGTH_LONG)
                 //Toast toast = Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT);

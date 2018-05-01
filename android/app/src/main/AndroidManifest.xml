@@ -29,6 +29,7 @@
         <activity android:name=".WaiterActivity" />
         <activity android:name=".RequestTableActivity" />
         <activity android:name=".ShiftActivity" />
+        <activity android:name=".WaiterTableAlerts" />
         <activity android:name=".RequestTableCustomersActivity"></activity>
     </application>
 

@@ -1,15 +1,20 @@
 package com.example.softwareeng18.food4thought;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.content.Intent;
+import android.widget.Button;
 import android.widget.ListView;
+import java.util.ArrayList;
 import android.widget.TextView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
+import android.widget.AdapterView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -18,11 +23,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import java.util.ArrayList;
+import org.json.JSONObject;
 
 public class RequestTableCustomersActivity extends AppCompatActivity {
     int custID = 0;
     int tableID = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,19 +42,19 @@ public class RequestTableCustomersActivity extends AppCompatActivity {
         ArrayList<Integer> arr = extras.getIntegerArrayList("ids");
         //custID = extras.getInt("custID");
         //Toast toast = Toast.makeText(getApplicationContext(), "Hello: " +arr.get(0), Toast.LENGTH_LONG);
-        ArrayAdapter<Integer> itemsAdapter = new ArrayAdapter<Integer>(this,android.R.layout.simple_list_item_1,arr);
+        ArrayAdapter<Integer> itemsAdapter = new ArrayAdapter<Integer>(this, android.R.layout.simple_list_item_1, arr);
         ListView listView = (ListView) findViewById(R.id.listTables);
         listView.setAdapter(itemsAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Toast.makeText(Mainthis, numbers.get(i), Toast.LENGTH_SHORT).show();
-                tableID = Integer.parseInt(((TextView)view).getText().toString());
+                tableID = Integer.parseInt(((TextView) view).getText().toString());
                 custID = extras.getInt("custID");
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                //String url = "http://192.168.0.108:8080";
-                String url = getString(R.string.url);
-                url = url+"/seatcustomer?tableID="+ tableID + "&custID=" + custID;          //adding customer to custTable
+                //String url = "http://192.168.1.222:8080";
+                String url = "http://172.30.20.134:8080";
+                url = url + "/seatcustomer?tableID=" + tableID + "&custID=" + custID;          //adding customer to allTables
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {
                             @Override
@@ -105,9 +111,8 @@ public class RequestTableCustomersActivity extends AppCompatActivity {
 
                                     }
                                 }*/
-                                }
-                                catch(Exception e){
-                                    Toast mtoast =  Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT);
+                                } catch (Exception e) {
+                                    Toast mtoast = Toast.makeText(getApplicationContext(), "Exception", Toast.LENGTH_SHORT);
                                     mtoast.show();
                                 }
 
@@ -127,10 +132,23 @@ public class RequestTableCustomersActivity extends AppCompatActivity {
                 queue.add(stringRequest);
 
 
-
             }
         });
-        //Button placeOrderButton = (Button) findViewById(R.id.loginButton);
-    }
+        Button placeOrderButton = (Button) findViewById(R.id.placeOrderButton);
+        placeOrderButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent tables = new Intent(RequestTableCustomersActivity.this, OrderActivity.class);
+                Bundle bundle = new Bundle();
+                //bundle.putIntegerArrayList("ids", ids);
+                bundle.putInt("custID", custID);
+                bundle.putInt("tableID", tableID);
+                tables.putExtras(bundle);
+                startActivity(tables);
+            }
 
+
+        });
+
+    }
 }
+

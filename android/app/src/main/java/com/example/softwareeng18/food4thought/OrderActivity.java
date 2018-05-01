@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +38,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
+
+    private Button request;
+   // private TextView resultText;
+    //private Button button2;
+    //private TextView resultText2;
+    String message = " ";
+    int tableID = 0;
 
     private Button requestWaiterButton;
     private TextView resultText;
@@ -129,16 +137,169 @@ public class OrderActivity extends AppCompatActivity {
         });
 
         //request waiter
-        requestWaiterButton = (Button) findViewById(R.id.RequestWaiter);
+
+        Button requestButton = (Button) findViewById(R.id.RequestWaiter);
         resultText = (TextView) findViewById(R.id.result);
-        requestWaiterButton.setOnClickListener(new OnClickListener() {
+        /*requestWaiterButton.setOnClickListener(new OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
                     showInputDialog();
                 }
-            });
+            });*/
+        requestButton = (Button) findViewById(R.id.RequestWaiter);
+        resultText = (TextView) findViewById(R.id.result);
+        requestButton.setOnClickListener(new OnClickListener() {
 
+            @Override
+            public void onClick(View view) {
+                Intent intExtras = getIntent();
+                Bundle extras = intExtras.getExtras();
+                int custID = extras.getInt("custID");
+                tableID = extras.getInt("tableID");
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(OrderActivity.this);
+                builder.setTitle("Send message to waiter");
+
+// Set up the input
+                final EditText input = new EditText(OrderActivity.this);
+// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+
+// Set up the buttons
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        message = input.getText().toString();
+                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                        // String url = "http://192.168.1.222:8080";
+                        String url = "http://172.30.20.134:8080";
+                        Toast toast = Toast.makeText(OrderActivity.this,"msg: "+message, Toast.LENGTH_LONG);
+                        toast.show();
+                        url = url + "/addrequest?tableID=" + tableID + "&message=" + message;
+                        //Toast toast = Toast.makeText(OrderActivity.this,"msg: "+message, Toast.LENGTH_LONG);
+                        //toast.show();
+                        StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
+                                new Response.Listener<String>() {
+                                    @Override
+                                    public void onResponse(String response) {
+                                        if (response.trim().length() == 0) {
+                                            Toast toast = Toast.makeText(getApplicationContext(), "incorrect credentials", Toast.LENGTH_SHORT);
+                                            toast.show();
+                                        } else {
+                                            try {
+                                       /* Iterator iter = new Iterator() {
+                                            @Override
+                                            public boolean hasNext() {
+                                                return false;
+                                            }
+
+                                            @Override
+                                            public Object next() {
+                                                return null;
+                                            }
+                                        };
+                                        JSONObject resp = new JSONObject(response);
+                                        Toast toast;
+                                        while (iter.hasNext()) {
+                                            Object key = iter.next();
+                                            try {
+                                                Object value = resp.get((String)key);
+                                            } catch (Exception e) {
+                                                // Something went wrong!
+                                            }
+                                        }*/
+                                                // JSONObject resp = new JSONObject(response);
+                                                //Toast toast;
+                                            /*JSONArray res = new JSONArray(response);
+                                            ArrayList<Integer> ids= new ArrayList<Integer>();
+                                            for (int i = 0; i< res.length(); i++)
+                                            {
+                                                JSONObject table = res.getJSONObject(i);
+                                                int id = table.getInt("tableId");
+                                                ids.add(id);
+                                            }*/
+                                                //JSONArray arr = res.getJSONArray("tableId");
+                                                //toast = Toast.makeText(getApplicationContext(), "Hello: "+ids.get(0), Toast.LENGTH_LONG);
+                                                //toast.show();
+                                           /* Intent tables=new Intent(RequestTableActivity.this,RequestTableCustomersActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putIntegerArrayList("ids", ids);
+                                            bundle.putInt("custID", pid);
+                                            tables.putExtras(bundle);
+                                            startActivity(tables);*/
+                                       /* switch(resp.getString("role")){
+                                            case "Manager":
+//                                                resp = new JSONObject(response);
+                                                Intent managerIntent=new Intent(LoginActivity.this,ManagerActivity.class);
+                                                startActivity(managerIntent);
+                                                break;
+                                            case "Chef":
+                                                resp = new JSONObject(response);
+                                                Intent chefIntent=new Intent(LoginActivity.this,ChefActivity.class);
+                                                startActivity(chefIntent);
+                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+                                                toast.show();
+                                                break;
+                                            case "Waiter":
+                                                resp = new JSONObject(response);
+                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+                                                toast.show();
+                                                Intent waiterIntent=new Intent(LoginActivity.this,WaiterActivity.class);
+                                                startActivity(waiterIntent);
+                                                break;
+                                            case "Busboy":
+                                                resp = new JSONObject(response);
+                                                Intent busboyIntent=new Intent(LoginActivity.this,BusBoyActivity.class);
+                                                startActivity(busboyIntent);
+                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+                                                toast.show();;
+                                                break;
+                                        }
+
+
+//                                        resp = new JSONObject(response);*/
+                                                // toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
+                                                //toast.show();
+                                            } catch (Exception e) {
+                                                Toast mytoast = Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_SHORT);
+                                                mytoast.show();
+
+                                            }
+                                        }
+
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Context context = getApplicationContext();
+                                CharSequence text = "Server Error!";
+                                int duration = Toast.LENGTH_SHORT;
+
+                                Toast toast = Toast.makeText(context, text, duration);
+                                toast.show();
+                            }
+                        });
+
+                        queue.add(stringRequest);
+                    }
+                });
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
+                //showInputDialog();
+
+
+
+
+            }
+        });
 
 
 

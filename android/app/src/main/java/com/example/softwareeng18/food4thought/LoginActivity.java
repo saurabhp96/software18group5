@@ -22,7 +22,7 @@ import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static String BASE_ADDRESS = "http://http://192.168.1.6:8080";
+    public static String BASE_ADDRESS = "http://172.30.20.134:8080";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
