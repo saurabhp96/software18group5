@@ -186,8 +186,26 @@ public class OrderActivity extends AppCompatActivity {
         PayBill.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //move to customer screen
-                Intent customerIntent=new Intent(OrderActivity.this,PayBillActivity.class);
-                startActivity(customerIntent);
+                AlertDialog.Builder builder=new AlertDialog.Builder(getApplicationContext());
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        splitBillOkPressed();
+                    }
+                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        splitBillNoPressed();
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                }).setMessage("Do you want to split the bill?");
+
+                builder.create().show();
+
 
             }
         });
@@ -378,9 +396,34 @@ public class OrderActivity extends AppCompatActivity {
 
         }
 
+    /**
+     * This method is called when user presses yes to split the bill
+     */
+    private void splitBillOkPressed() {
+        Bundle bundle=new Bundle();
+        bundle.putInt("custID",customerID);
+        bundle.putBoolean("splitBill",true);
+
+        Intent customerIntent=new Intent(OrderActivity.this,PayBillActivity.class);
+        customerIntent.putExtras(bundle);
+        startActivity(customerIntent);
+    }
+
+    /**
+     * This method is called when user presses no to split the bill
+     */
+    private void splitBillNoPressed() {
+        Bundle bundle=new Bundle();
+        bundle.putInt("custID",customerID);
+        bundle.putBoolean("splitBill",false);
+
+        Intent customerIntent=new Intent(OrderActivity.this,PayBillActivity.class);
+        customerIntent.putExtras(bundle);
+        startActivity(customerIntent);
+    }
 
 
-        //request waiter
+    //request waiter
     protected void showInputDialog() {
 
         LayoutInflater layoutInflater = LayoutInflater.from(OrderActivity.this);

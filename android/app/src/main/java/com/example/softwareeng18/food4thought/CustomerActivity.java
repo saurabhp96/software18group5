@@ -31,6 +31,7 @@ public class CustomerActivity extends AppCompatActivity {
                 startActivity(placeYourOrderIntent);
             }
         });
+        placeYourOrderButton.setVisibility(View.GONE); placeYourOrderButton.setEnabled(false);
 
 
     }
