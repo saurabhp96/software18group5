@@ -26,6 +26,7 @@ import java.util.ArrayList;
 public class WaiterTableAlerts extends AppCompatActivity {
 
     public  ArrayAdapter<String> itemsAdapter;
+    ArrayList<String> messages;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,19 +38,21 @@ public class WaiterTableAlerts extends AppCompatActivity {
         final Bundle extras = intentExtras.getExtras();
         ArrayList<Integer> arr = extras.getIntegerArrayList("tableids");
         ArrayList<String> arr2 = extras.getStringArrayList("messages");
-        ArrayList<String> messages = new ArrayList<String>();
+        messages = new ArrayList<String>();
         for (int i = 0; i<arr.size();i++)
         {
             String message = "Table Num " + arr.get(i) + ": " + arr2.get(i);
             messages.add(message);
         }
         itemsAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, messages);
-        ListView listView = (ListView) findViewById(R.id.listAlerts);
+        final ListView listView = (ListView) findViewById(R.id.listAlerts);
         listView.setAdapter(itemsAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 //Toast.makeText(Mainthis, numbers.get(i), Toast.LENGTH_SHORT).show();
+                messages.remove(i);
+                itemsAdapter.notifyDataSetChanged();
 
 
             }

@@ -48,8 +48,9 @@ public class OrderActivity extends AppCompatActivity {
     //private TextView resultText2;
     String message = " ";
     int tableID = 0;
+    private boolean priority=false;
 
-    private class MenuItem{
+    public class MenuItem{
         String name;
         double price;
         int calories;
@@ -87,6 +88,14 @@ public class OrderActivity extends AppCompatActivity {
         @Override
         public String toString() {
             return name;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if(obj==null)
+                return false;
+
+            return name.equalsIgnoreCase(((MenuItem)obj).getName());
         }
     }
 
@@ -150,10 +159,11 @@ public class OrderActivity extends AppCompatActivity {
         Button PlaceOrder = (Button) findViewById(R.id.PlaceOrder);
         PlaceOrder.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                //move to customer screen
+                int count=0;
                 for(int i=0; i<menuList.size(); i++) {
                     CheckedTextView checkedTextView=(CheckedTextView)menuView.getChildAt(i);
                     if(checkedTextView.isChecked()) {
+                        count++;
                         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
                         String addRequest = url + "/order/" + customerID + "?itemName="+menuList.get(i).getName();
                         StringRequest request = new StringRequest(Request.Method.POST, addRequest, new Response.Listener<String>() {
@@ -174,9 +184,17 @@ public class OrderActivity extends AppCompatActivity {
 
                 Bundle bundle=new Bundle();
                 bundle.putInt("custID",customerID);
-                Intent customerIntent=new Intent(OrderActivity.this,CustomerWaitTimeActivity.class);
+
+                AlertDialog.Builder builder=new AlertDialog.Builder(getApplicationContext());
+                builder.setMessage("Wait time:"+(priority?count*10:count*30/4)+" minutes").setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                }).create().show();
+                /*Intent customerIntent=new Intent(OrderActivity.this,CustomerWaitTimeActivity.class);
                 customerIntent.putExtras(bundle);
-                startActivity(customerIntent);
+                startActivity(customerIntent);*/
 
             }
         });
@@ -274,79 +292,7 @@ public class OrderActivity extends AppCompatActivity {
                                             toast.show();
                                         } else {
                                             try {
-                                       /* Iterator iter = new Iterator() {
-                                            @Override
-                                            public boolean hasNext() {
-                                                return false;
-                                            }
 
-                                            @Override
-                                            public Object next() {
-                                                return null;
-                                            }
-                                        };
-                                        JSONObject resp = new JSONObject(response);
-                                        Toast toast;
-                                        while (iter.hasNext()) {
-                                            Object key = iter.next();
-                                            try {
-                                                Object value = resp.get((String)key);
-                                            } catch (Exception e) {
-                                                // Something went wrong!
-                                            }
-                                        }*/
-                                                // JSONObject resp = new JSONObject(response);
-                                                //Toast toast;
-                                            /*JSONArray res = new JSONArray(response);
-                                            ArrayList<Integer> ids= new ArrayList<Integer>();
-                                            for (int i = 0; i< res.length(); i++)
-                                            {
-                                                JSONObject table = res.getJSONObject(i);
-                                                int id = table.getInt("tableId");
-                                                ids.add(id);
-                                            }*/
-                                                //JSONArray arr = res.getJSONArray("tableId");
-                                                //toast = Toast.makeText(getApplicationContext(), "Hello: "+ids.get(0), Toast.LENGTH_LONG);
-                                                //toast.show();
-                                           /* Intent tables=new Intent(RequestTableActivity.this,RequestTableCustomersActivity.class);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putIntegerArrayList("ids", ids);
-                                            bundle.putInt("custID", pid);
-                                            tables.putExtras(bundle);
-                                            startActivity(tables);*/
-                                       /* switch(resp.getString("role")){
-                                            case "Manager":
-//                                                resp = new JSONObject(response);
-                                                Intent managerIntent=new Intent(LoginActivity.this,ManagerActivity.class);
-                                                startActivity(managerIntent);
-                                                break;
-                                            case "Chef":
-                                                resp = new JSONObject(response);
-                                                Intent chefIntent=new Intent(LoginActivity.this,ChefActivity.class);
-                                                startActivity(chefIntent);
-                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                toast.show();
-                                                break;
-                                            case "Waiter":
-                                                resp = new JSONObject(response);
-                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                toast.show();
-                                                Intent waiterIntent=new Intent(LoginActivity.this,WaiterActivity.class);
-                                                startActivity(waiterIntent);
-                                                break;
-                                            case "Busboy":
-                                                resp = new JSONObject(response);
-                                                Intent busboyIntent=new Intent(LoginActivity.this,BusBoyActivity.class);
-                                                startActivity(busboyIntent);
-                                                toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                toast.show();;
-                                                break;
-                                        }
-
-
-//                                        resp = new JSONObject(response);*/
-                                                // toast = Toast.makeText(getApplicationContext(), resp.getString("role"), Toast.LENGTH_SHORT);
-                                                //toast.show();
                                             } catch (Exception e) {
                                                 Toast mytoast = Toast.makeText(getApplicationContext(), "Exception: " + e, Toast.LENGTH_SHORT);
                                                 mytoast.show();
@@ -403,6 +349,8 @@ public class OrderActivity extends AppCompatActivity {
         Bundle bundle=new Bundle();
         bundle.putInt("custID",customerID);
         bundle.putBoolean("splitBill",true);
+        bundle.putBoolean("priority",priority);
+
 
         Intent customerIntent=new Intent(OrderActivity.this,PayBillActivity.class);
         customerIntent.putExtras(bundle);
@@ -416,6 +364,7 @@ public class OrderActivity extends AppCompatActivity {
         Bundle bundle=new Bundle();
         bundle.putInt("custID",customerID);
         bundle.putBoolean("splitBill",false);
+        bundle.putBoolean("priority",priority);
 
         Intent customerIntent=new Intent(OrderActivity.this,PayBillActivity.class);
         customerIntent.putExtras(bundle);
@@ -467,7 +416,7 @@ public class OrderActivity extends AppCompatActivity {
         alertDialogBuilder.setCancelable(false)
                 .setPositiveButton("Yes ($5 fee)", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        //resultText2.setText("Hello, " + editText.getText());
+                        priority=true;
                     }
                 })
                 .setNegativeButton("No",

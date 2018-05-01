@@ -15,12 +15,57 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class PayBillActivity extends AppCompatActivity {
 
     private Button button;
     private TextView resultText;
+    private double bill;
+
 
     protected void onCreate(Bundle savedInstanceState) {
+        bill=0;
+
+        Bundle bundle=getIntent().getExtras();
+        final int custID=bundle.getInt("custID");
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        String url=getString(R.string.url);
+        String getRequest=url+"/order/"+custID;
+        StringRequest stringRequest=new StringRequest(Request.Method.GET, getRequest, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray orderList=new JSONArray(response);
+                    for(int i=0; i<orderList.length(); i++){
+                        JSONObject orderItem=orderList.getJSONObject(i);
+                        if(orderItem.getInt("custID")==custID){
+                            String name=orderItem.getString("itemName");
+                            
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+
 
 
         super.onCreate(savedInstanceState);
