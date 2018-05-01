@@ -1,20 +1,15 @@
 package com.example.softwareeng18.food4thought;
 
 import android.content.Context;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.content.Intent;
-import android.widget.Button;
-import android.widget.ListView;
-import java.util.ArrayList;
-import android.widget.TextView;
-import android.widget.ArrayAdapter;
-import android.widget.Toast;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -23,7 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONObject;
+import java.util.ArrayList;
 
 public class RequestTableCustomersActivity extends AppCompatActivity {
     int custID = 0;
@@ -51,7 +46,8 @@ public class RequestTableCustomersActivity extends AppCompatActivity {
                 tableID = Integer.parseInt(((TextView)view).getText().toString());
                 custID = extras.getInt("custID");
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                String url = "http://192.168.0.108:8080";
+                //String url = "http://192.168.0.108:8080";
+                String url = getString(R.string.url);
                 url = url+"/seatcustomer?tableID="+ tableID + "&custID=" + custID;          //adding customer to custTable
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                         new Response.Listener<String>() {

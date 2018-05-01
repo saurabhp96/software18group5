@@ -20,7 +20,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class RequestTableActivity extends AppCompatActivity {
     int pid = 0;
@@ -47,7 +46,8 @@ public class RequestTableActivity extends AppCompatActivity {
                 String first = firstName.getText().toString();
                 String last = lastName.getText().toString();
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                String url = "http://192.168.0.108:8080";
+                //String url = "http://192.168.0.108:8080";
+                String url=getString(R.string.url);
                 url = url+"/customers?firstName="+ first + "&lastName=" + last;
                 StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
                         new Response.Listener<String>() {
@@ -121,6 +121,7 @@ public class RequestTableActivity extends AppCompatActivity {
 
                         Toast toast = Toast.makeText(context, text, duration);
                         toast.show();
+                        Toast.makeText(context,getString(R.string.url),Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -152,7 +153,8 @@ public class RequestTableActivity extends AppCompatActivity {
                 String num = guests.getText().toString();
                 int guestsNum = Integer.parseInt(num);
                 RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
-                String url = "http://192.168.0.108:8080";
+                //String url = "http://192.168.0.108:8080";
+                String url = getString(R.string.url);
                 url = url+"/findtables?numPeople="+ guestsNum;
                 // Toast.makeText(getApplicationContext(),url,Toast.LENGTH_LONG)
                 //Toast toast = Toast.makeText(getApplicationContext(), url, Toast.LENGTH_SHORT);

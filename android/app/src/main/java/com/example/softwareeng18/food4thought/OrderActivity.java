@@ -3,17 +3,21 @@
 
 package com.example.softwareeng18.food4thought;
 
-import android.os.Bundle;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.view.LayoutInflater;
-import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +34,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
 
@@ -38,12 +43,16 @@ public class OrderActivity extends AppCompatActivity {
     private Button button2;
     private TextView resultText2;
     private EditText tableNumberText;
+    final Context context=this;
 
     public ListView menuView;
     public ArrayAdapter<String> listAdapter;
     ArrayList<String> menuList;
     private String url;
     public static final String TABLENUMBER="tablenumber";
+
+
+    public String Jsonoutput;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,9 +73,10 @@ public class OrderActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONArray res=new JSONArray(response);
+                    Jsonoutput = response;
                     for(int i=0; i<res.length();i++){
                         JSONObject item=res.getJSONObject(i);
-                        menuList.add(item.getString("name")+" $"+item.getDouble("price") );
+                        menuList.add(item.getString("itemName")+" $"+item.getDouble("price") );
                     }
 
                 } catch (JSONException e) {
@@ -134,10 +144,83 @@ public class OrderActivity extends AppCompatActivity {
 
 
         menuView = (ListView) findViewById( R.id.menuView);
-        menuView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        //menuView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
         listAdapter = new ArrayAdapter<String>(this, R.layout.orderrow, menuList);
         menuView.setAdapter(listAdapter);
+
+
+
+        //select menu item
+        menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //http://www.mkyong.com/android/android-prompt-user-input-dialog-example/
+                LayoutInflater li=LayoutInflater.from(context);
+                View previewView=li.inflate(R.layout.preview_display,null);
+                final int pos=position;
+
+                AlertDialog.Builder builder=new AlertDialog.Builder(context);
+                builder.setView(previewView);
+
+                ImageView itemImage=(ImageView)previewView.findViewById(R.id.preview_image);
+                TextView itemName=(TextView)previewView.findViewById(R.id.preview_name);
+                TextView itemPrice=(TextView)previewView.findViewById(R.id.preview_price);
+
+                try {
+                    Toast.makeText(context, menuList.get(position), Toast.LENGTH_LONG).show();
+                    //JSONObject root=new JSONObject();
+                    //JSONArray reader = root.getJSONArray(Jsonoutput);
+                    //JSONObject c = reader.getJSONObject(position);
+                    //String imageURL=c.getString("image");
+                    //new ImageLoader(itemImage).execute(imageURL);
+
+                    //Toast.makeText(context, Jsonoutput, Toast.LENGTH_LONG).show();
+
+                    JSONObject root=new JSONObject(Jsonoutput);
+                    //Toast.makeText(context, root.toString(), Toast.LENGTH_LONG).show();
+
+                    JSONArray array = new JSONArray(root);
+                    //Toast.makeText(context, array.toString(), Toast.LENGTH_LONG).show();
+                    //JSONObject c = reader.getJSONObject(position);
+
+                    Toast.makeText(context, array.getJSONObject(position).toString(), Toast.LENGTH_LONG).show();
+                    Log.d("tag",array.getJSONObject(position).toString() );
+
+                    List<String> list = new ArrayList<String>();
+                    for (int i=0; i<array.length(); i++) {
+                        list.add( array.getString(i) );
+                    }
+
+                    Toast.makeText(context, list.toString(), Toast.LENGTH_LONG).show();
+
+
+
+                    //itemName.setText(array[position].getString("itemName"));
+                    //itemPrice.setText("$" + c.getString("price"));
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        okPressed(pos);
+                    }
+                }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+
+                builder.create().show();
+
+            }
+        });
+
 
 
 //        menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -154,6 +237,67 @@ public class OrderActivity extends AppCompatActivity {
 
 
         }
+
+    //okpressed: add to list which becomes total Order
+    private void okPressed(int position) {
+//        txtString.setText(Long.toString(position));
+//        int idnum = position;
+//        String images = "";
+//        String instructions = "";
+//        String title="";
+//        String recipeId = "";
+//
+//        // Parse JSON return
+//        try {
+//            JSONObject jsonroot = new JSONObject(Jsonoutput);
+//            JSONArray reader = jsonroot.getJSONArray("results");
+//            JSONObject c = reader.getJSONObject(idnum);
+//            images = c.getString("image");
+//            title = c.getString("title");
+//            recipeId = c.getString("id");
+//
+//            JSONArray instructionlist = c.getJSONArray("analyzedInstructions").getJSONObject(0).getJSONArray("steps");
+//            for (int j = 0; j < instructionlist.length(); j++) {
+//                int tmp = j + 1;
+//                instructions = instructions + "Step " + tmp + ": " + instructionlist.getJSONObject(j).getString("step") + " \n \n";
+//            }
+//
+//            JSONArray usedIngredients=c.getJSONArray("usedIngredients");
+//            for(int index=0; index<usedIngredients.length(); index++){
+//                JSONObject ingredientJSON=usedIngredients.getJSONObject(index);
+//                Ingredient ing=new Ingredient(ingredientJSON.getString("name"),ingredientJSON.getDouble("amount"),ingredientJSON.getString("unit"));
+//                if (pantryIngredients.contains(ing)) {
+//                    int pantryI = pantryIngredients.indexOf(ing);
+//                    double newAmount = pantryIngredients.get(pantryI).getQuantity() -
+//                            ingredientJSON.getDouble("amount") *
+//                                    findConversionFactor(ingredientJSON.getString("unit"), pantryIngredients.get(pantryI).getMeasurementUnit());
+//                    pantryIngredients.get(pantryI).setQuantity(newAmount);
+//                    if (pantryIngredients.get(pantryI).getQuantity() <= 0) {
+//                        pantryIngredients.remove(pantryI);
+//                    }
+//                }
+//            }
+//
+//            updatePantry(pantryIngredients);
+//
+//        } catch (JSONException e) {
+//            txtString.setText("fail Json parse");
+//        }
+//
+//        Intent intent = new Intent(Recipes.this, Recipe_Display.class);
+//        Bundle bundle = new Bundle();
+//        bundle.putString("IMAGE_URL", images);
+//        bundle.putString("RECIPE_NAME",title);
+//        bundle.putString("INSTRUCTIONS", instructions);
+//        bundle.putString("RECIPE_ID", recipeId);
+//
+//        //txtString.setText(bundle.getString("INSTRUCTIONS"));
+//        if (intent == null)
+//            txtString.setText("fail intent");
+//        intent.putExtras(bundle);
+//        startActivity(intent);
+
+    }
 
 
 
