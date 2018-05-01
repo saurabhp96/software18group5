@@ -35,8 +35,7 @@ public class Controller {
         Customer customer = new Customer();
         customer.setFirstName(firstName);
         customer.setLastName(lastName);
-        customerRepository.save(customer);
-        return customerRepository.findById(customerRepository.count()).get();
+        return customerRepository.save(customer);
     }
 
     @RequestMapping(value = "/customers", method = RequestMethod.GET)
