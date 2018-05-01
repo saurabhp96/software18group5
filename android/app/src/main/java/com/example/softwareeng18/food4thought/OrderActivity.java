@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -17,6 +18,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -39,6 +41,7 @@ import java.util.List;
 
 public class OrderActivity extends AppCompatActivity {
 
+
     private Button request;
    // private TextView resultText;
     //private Button button2;
@@ -46,21 +49,60 @@ public class OrderActivity extends AppCompatActivity {
     String message = " ";
     int tableID = 0;
 
+    private class MenuItem{
+        String name;
+        double price;
+        int calories;
+
+        public MenuItem(String name, double price, int calories) {
+            this.name = name;
+            this.price = price;
+            this.calories = calories;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public double getPrice() {
+            return price;
+        }
+
+        public void setPrice(double price) {
+            this.price = price;
+        }
+
+        public int getCalories() {
+            return calories;
+        }
+
+        public void setCalories(int calories) {
+            this.calories = calories;
+        }
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
+
     private Button requestWaiterButton;
     private TextView resultText;
     private Button button2;
     private TextView resultText2;
     private EditText tableNumberText;
+    private int customerID;
     final Context context=this;
 
     public ListView menuView;
-    public ArrayAdapter<String> listAdapter;
-    ArrayList<String> menuList;
+    private List<MenuItem> menuList;
     private String url;
     public static final String TABLENUMBER="tablenumber";
-
-
-    public String Jsonoutput;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,12 +110,13 @@ public class OrderActivity extends AppCompatActivity {
 
         tableNumberText=(EditText)findViewById(R.id.table_num);
         Bundle bundle=getIntent().getExtras();
-        tableNumberText.setText(bundle==null?"1":bundle.getString(TABLENUMBER));
+        customerID=bundle.getInt("custID");
+        tableNumberText.setText(bundle==null?"1":bundle.getInt("tableID")+"");
         tableNumberText.setEnabled(false);
 
         url=getString(R.string.url);
         String menuRequest=url+"/menu";
-        menuList=new ArrayList<String>();
+        menuList=new ArrayList<MenuItem>();
 
         RequestQueue queue= Volley.newRequestQueue(this);
         StringRequest request=new StringRequest(Request.Method.GET, menuRequest, new Response.Listener<String>() {
@@ -81,10 +124,10 @@ public class OrderActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONArray res=new JSONArray(response);
-                    Jsonoutput = response;
+
                     for(int i=0; i<res.length();i++){
                         JSONObject item=res.getJSONObject(i);
-                        menuList.add(item.getString("itemName")+" $"+item.getDouble("price") );
+                        menuList.add(new MenuItem(item.getString("itemName"),item.getDouble("price"),item.getInt("calories")) );
                     }
 
                 } catch (JSONException e) {
@@ -108,7 +151,31 @@ public class OrderActivity extends AppCompatActivity {
         PlaceOrder.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 //move to customer screen
+                for(int i=0; i<menuList.size(); i++) {
+                    CheckedTextView checkedTextView=(CheckedTextView)menuView.getChildAt(i);
+                    if(checkedTextView.isChecked()) {
+                        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+                        String addRequest = url + "/order/" + customerID + "?itemName="+menuList.get(i).getName();
+                        StringRequest request = new StringRequest(Request.Method.POST, addRequest, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+
+
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+                        queue.add(request);
+                    }
+                }
+
+                Bundle bundle=new Bundle();
+                bundle.putInt("custID",customerID);
                 Intent customerIntent=new Intent(OrderActivity.this,CustomerWaitTimeActivity.class);
+                customerIntent.putExtras(bundle);
                 startActivity(customerIntent);
 
             }
@@ -302,164 +369,14 @@ public class OrderActivity extends AppCompatActivity {
         });
 
 
-
-
         menuView = (ListView) findViewById( R.id.menuView);
-        //menuView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+        menuView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 
-        listAdapter = new ArrayAdapter<String>(this, R.layout.orderrow, menuList);
+        ArrayAdapter<MenuItem> listAdapter = new ArrayAdapter<MenuItem>(this, android.R.layout.simple_list_item_multiple_choice, menuList);
         menuView.setAdapter(listAdapter);
 
 
-
-        //select menu item
-        menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //http://www.mkyong.com/android/android-prompt-user-input-dialog-example/
-                LayoutInflater li=LayoutInflater.from(context);
-                View previewView=li.inflate(R.layout.preview_display,null);
-                final int pos=position;
-
-                AlertDialog.Builder builder=new AlertDialog.Builder(context);
-                builder.setView(previewView);
-
-                ImageView itemImage=(ImageView)previewView.findViewById(R.id.preview_image);
-                TextView itemName=(TextView)previewView.findViewById(R.id.preview_name);
-                TextView itemPrice=(TextView)previewView.findViewById(R.id.preview_price);
-
-                try {
-                    Toast.makeText(context, menuList.get(position), Toast.LENGTH_LONG).show();
-                    //JSONObject root=new JSONObject();
-                    //JSONArray reader = root.getJSONArray(Jsonoutput);
-                    //JSONObject c = reader.getJSONObject(position);
-                    //String imageURL=c.getString("image");
-                    //new ImageLoader(itemImage).execute(imageURL);
-
-                    //Toast.makeText(context, Jsonoutput, Toast.LENGTH_LONG).show();
-
-                    JSONObject root=new JSONObject(Jsonoutput);
-                    //Toast.makeText(context, root.toString(), Toast.LENGTH_LONG).show();
-
-                    JSONArray array = new JSONArray(root);
-                    //Toast.makeText(context, array.toString(), Toast.LENGTH_LONG).show();
-                    //JSONObject c = reader.getJSONObject(position);
-
-                    Toast.makeText(context, array.getJSONObject(position).toString(), Toast.LENGTH_LONG).show();
-                    Log.d("tag",array.getJSONObject(position).toString() );
-
-                    List<String> list = new ArrayList<String>();
-                    for (int i=0; i<array.length(); i++) {
-                        list.add( array.getString(i) );
-                    }
-
-                    Toast.makeText(context, list.toString(), Toast.LENGTH_LONG).show();
-
-
-
-                    //itemName.setText(array[position].getString("itemName"));
-                    //itemPrice.setText("$" + c.getString("price"));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                builder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        okPressed(pos);
-                    }
-                }).setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-
-                builder.create().show();
-
-            }
-        });
-
-
-
-//        menuView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-////                String item = menuList.get(i);
-//                menuList.remove(i);
-////                menuList.remove(cu)
-////                Toast toast = Toast.makeText(getApplicationContext(), ""+menuList.get(i), Toast.LENGTH_SHORT);
-////                toast.show();
-//                listAdapter.notifyDataSetChanged();
-//            }
-//        });
-
-
         }
-
-    //okpressed: add to list which becomes total Order
-    private void okPressed(int position) {
-//        txtString.setText(Long.toString(position));
-//        int idnum = position;
-//        String images = "";
-//        String instructions = "";
-//        String title="";
-//        String recipeId = "";
-//
-//        // Parse JSON return
-//        try {
-//            JSONObject jsonroot = new JSONObject(Jsonoutput);
-//            JSONArray reader = jsonroot.getJSONArray("results");
-//            JSONObject c = reader.getJSONObject(idnum);
-//            images = c.getString("image");
-//            title = c.getString("title");
-//            recipeId = c.getString("id");
-//
-//            JSONArray instructionlist = c.getJSONArray("analyzedInstructions").getJSONObject(0).getJSONArray("steps");
-//            for (int j = 0; j < instructionlist.length(); j++) {
-//                int tmp = j + 1;
-//                instructions = instructions + "Step " + tmp + ": " + instructionlist.getJSONObject(j).getString("step") + " \n \n";
-//            }
-//
-//            JSONArray usedIngredients=c.getJSONArray("usedIngredients");
-//            for(int index=0; index<usedIngredients.length(); index++){
-//                JSONObject ingredientJSON=usedIngredients.getJSONObject(index);
-//                Ingredient ing=new Ingredient(ingredientJSON.getString("name"),ingredientJSON.getDouble("amount"),ingredientJSON.getString("unit"));
-//                if (pantryIngredients.contains(ing)) {
-//                    int pantryI = pantryIngredients.indexOf(ing);
-//                    double newAmount = pantryIngredients.get(pantryI).getQuantity() -
-//                            ingredientJSON.getDouble("amount") *
-//                                    findConversionFactor(ingredientJSON.getString("unit"), pantryIngredients.get(pantryI).getMeasurementUnit());
-//                    pantryIngredients.get(pantryI).setQuantity(newAmount);
-//                    if (pantryIngredients.get(pantryI).getQuantity() <= 0) {
-//                        pantryIngredients.remove(pantryI);
-//                    }
-//                }
-//            }
-//
-//            updatePantry(pantryIngredients);
-//
-//        } catch (JSONException e) {
-//            txtString.setText("fail Json parse");
-//        }
-//
-//        Intent intent = new Intent(Recipes.this, Recipe_Display.class);
-//        Bundle bundle = new Bundle();
-//        bundle.putString("IMAGE_URL", images);
-//        bundle.putString("RECIPE_NAME",title);
-//        bundle.putString("INSTRUCTIONS", instructions);
-//        bundle.putString("RECIPE_ID", recipeId);
-//
-//        //txtString.setText(bundle.getString("INSTRUCTIONS"));
-//        if (intent == null)
-//            txtString.setText("fail intent");
-//        intent.putExtras(bundle);
-//        startActivity(intent);
-
-    }
-
 
 
 
