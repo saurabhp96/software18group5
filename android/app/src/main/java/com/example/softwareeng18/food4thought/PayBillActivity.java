@@ -50,7 +50,7 @@ public class PayBillActivity extends AppCompatActivity {
                         JSONObject orderItem=orderList.getJSONObject(i);
                         if(orderItem.getInt("custID")==custID){
                             String name=orderItem.getString("itemName");
-                            
+
                         }
                     }
                 } catch (JSONException e) {
